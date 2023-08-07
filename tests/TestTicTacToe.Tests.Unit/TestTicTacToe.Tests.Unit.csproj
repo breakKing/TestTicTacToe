@@ -22,4 +22,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\TestTicTacToe.Application\TestTicTacToe.Application.csproj" />
+    </ItemGroup>
+
 </Project>
