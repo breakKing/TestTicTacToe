@@ -2,7 +2,4 @@
 
 namespace Common.Domain.Primitives;
 
-public sealed class DomainEvent : INotification
-{
-    
-}
+public abstract record DomainEvent : INotification;
