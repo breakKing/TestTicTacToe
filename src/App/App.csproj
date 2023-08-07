@@ -13,9 +13,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\TestTicTacToe.Application\TestTicTacToe.Application.csproj" />
-      <ProjectReference Include="..\TestTicTacToe.Infrastructure\TestTicTacToe.Infrastructure.csproj" />
-    </ItemGroup>
-
 </Project>
