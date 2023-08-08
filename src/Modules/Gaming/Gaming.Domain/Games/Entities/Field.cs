@@ -6,15 +6,16 @@ namespace Gaming.Domain.Games.Entities;
 
 public sealed class Field : Entity<FieldId>
 {
-    private const string CellDoesntExistsErrorDescription = "Такой клетки нет на поле";
     private const string CellAlreadyMarkedErrorDescription = "Данная клетка уже занята";
-    
-    private readonly FieldMark[][] _cells = new[]
-    {
-        new[] { FieldMark.NotMarked, FieldMark.NotMarked, FieldMark.NotMarked },
-        new[] { FieldMark.NotMarked, FieldMark.NotMarked, FieldMark.NotMarked },
-        new[] { FieldMark.NotMarked, FieldMark.NotMarked, FieldMark.NotMarked },
-    };
+
+    private const int FieldSize = 3;
+
+    private readonly FieldMark[][] _cells = Enumerable.Range(0, FieldSize)
+        .Select(_ =>
+            Enumerable.Range(0, FieldSize)
+                .Select(_ => FieldMark.NotMarked)
+                .ToArray())
+        .ToArray();
     
     public GameId GameId { get; private set; }
     
@@ -26,23 +27,31 @@ public sealed class Field : Entity<FieldId>
         GameId = gameId;
     }
 
-    public ErrorOr<bool> FirstPlayerMove(int x, int y)
+    public ErrorOr<bool> FirstPlayerMove(FieldCoordinates coordinates)
     {
-        return PlayerMove(x, y, FieldMark.MarkedByFirstPlayer);
+        return PlayerMove(coordinates, FieldMark.MarkedByFirstPlayer);
     }
     
-    public ErrorOr<bool> SecondPlayerMove(int x, int y)
+    public ErrorOr<bool> SecondPlayerMove(FieldCoordinates coordinates)
     {
-        return PlayerMove(x, y, FieldMark.MarkedBySecondPlayer);
+        return PlayerMove(coordinates, FieldMark.MarkedBySecondPlayer);
     }
 
-    private ErrorOr<bool> PlayerMove(int x, int y, FieldMark markToSet)
+    public bool HasFirstPlayerWon()
     {
-        if (!CellExists(x, y))
-        {
-            return Error.Validation(description: CellDoesntExistsErrorDescription);
-        }
+        return PlayerWon(FieldMark.MarkedByFirstPlayer);
+    }
 
+    public bool HasSecondPlayerWon()
+    {
+        return PlayerWon(FieldMark.MarkedBySecondPlayer);
+    }
+    
+    private ErrorOr<bool> PlayerMove(FieldCoordinates coordinates, FieldMark markToSet)
+    {
+        var x = coordinates.Value.X;
+        var y = coordinates.Value.Y; 
+        
         if (_cells[x][y] != FieldMark.NotMarked)
         {
             return Error.Validation(description: CellAlreadyMarkedErrorDescription);
@@ -53,8 +62,41 @@ public sealed class Field : Entity<FieldId>
         return true;
     }
 
-    private static bool CellExists(int x, int y)
+    private bool PlayerWon(FieldMark fieldMarkToCheck)
     {
-        return (x is >= 0 and < 3) && (y is >= 0 and < 3);
+        return CheckRows(fieldMarkToCheck)
+               || CheckColumns(fieldMarkToCheck)
+               || CheckDiagonals(fieldMarkToCheck);
+    }
+
+    private bool CheckRows(FieldMark fieldMarkToCheck)
+    {
+        return _cells.Any(
+            row => 
+                row.All(cell => cell == fieldMarkToCheck));
+    }
+    
+    private bool CheckColumns(FieldMark fieldMarkToCheck)
+    {
+        for (int col = 0; col < FieldSize; col++)
+        {
+            bool isWinningColumn = Enumerable.Range(0, FieldSize)
+                .All(j => _cells[j][col] == fieldMarkToCheck);
+            
+            if (isWinningColumn)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    private bool CheckDiagonals(FieldMark fieldMarkToCheck)
+    {
+        return Enumerable.Range(0, FieldSize)
+                   .All(j => _cells[j][j] == fieldMarkToCheck)
+               || Enumerable.Range(0, FieldSize)
+                   .All(j => _cells[FieldSize - 1 - j][FieldSize - 1 - j] == fieldMarkToCheck);
     }
 }

@@ -84,7 +84,7 @@ public sealed class Lobby : AggregateRoot<LobbyId>
         
         GameStartedAt = DateTimeOffset.UtcNow;
         
-        RaiseEvent(new LobbyLockedAndStartedGame(
+        RaiseEvent(new LobbyLockedForGameStartDomainEvent(
             Id,
             InitiatorPlayerId,
             JoinedPlayerId,

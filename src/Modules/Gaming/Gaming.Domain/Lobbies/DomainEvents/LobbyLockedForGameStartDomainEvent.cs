@@ -4,7 +4,7 @@ using Gaming.Domain.Players.ValueObjects;
 
 namespace Gaming.Domain.Lobbies.DomainEvents;
 
-public sealed record LobbyLockedAndStartedGame(
+public sealed record LobbyLockedForGameStartDomainEvent(
     LobbyId LobbyId,
     PlayerId FirstPlayerId,
     PlayerId SecondPlayerId,
