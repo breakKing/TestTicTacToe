@@ -9,5 +9,5 @@ public sealed record GameMoveId : ValueObject<Guid>
     {
     }
 
-    public static GameMoveId Create() => new(Guid.NewGuid());
+    public static GameMoveId CreateNew() => new(Guid.NewGuid());
 }

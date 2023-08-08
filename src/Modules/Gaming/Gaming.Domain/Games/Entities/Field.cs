@@ -22,7 +22,7 @@ public sealed class Field : Entity<FieldId>
     public IReadOnlyList<IReadOnlyList<FieldMark>> Cells => _cells.AsReadOnly();
     
     /// <inheritdoc />
-    public Field(GameId gameId) : base(FieldId.Create())
+    public Field(GameId gameId) : base(FieldId.CreateNew())
     {
         GameId = gameId;
     }

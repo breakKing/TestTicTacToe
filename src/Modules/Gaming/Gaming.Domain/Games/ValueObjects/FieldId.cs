@@ -9,5 +9,5 @@ public sealed record FieldId : ValueObject<Guid>
     {
     }
     
-    public static FieldId Create() => new(Guid.NewGuid());
+    public static FieldId CreateNew() => new(Guid.NewGuid());
 }

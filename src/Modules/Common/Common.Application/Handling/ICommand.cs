@@ -3,7 +3,12 @@ using MediatR;
 
 namespace Common.Application.Handling;
 
-public interface ICommand : IRequest<ErrorOr<bool>>
+public interface ICommand<TResponse> : IRequest<ErrorOr<TResponse>>
+{
+    
+}
+
+public interface ICommand : ICommand<bool>
 {
     
 }

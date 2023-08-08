@@ -9,5 +9,5 @@ public sealed record LobbyId : ValueObject<Guid>
     {
     }
 
-    public static LobbyId Create() => new(Guid.NewGuid());
+    public static LobbyId CreateNew() => new(Guid.NewGuid());
 }

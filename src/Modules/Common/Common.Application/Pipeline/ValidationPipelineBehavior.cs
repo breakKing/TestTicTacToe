@@ -8,8 +8,6 @@ public sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineB
     where TRequest : notnull
     where TResponse : IErrorOr, new()
 {
-    private const string ValidationErrorCode = "Validation";
-    
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
     public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
@@ -48,7 +46,7 @@ public sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineB
         {
             var errors = errorsDictionary
                 .SelectMany(e => e.Value)
-                .Select(e => Error.Validation(ValidationErrorCode, e))
+                .Select(e => Error.Validation(description: e))
                 .ToArray();
 
             return (TResponse)(dynamic)errors;

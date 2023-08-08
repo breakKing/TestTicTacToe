@@ -16,7 +16,7 @@ public sealed class GameMove : Entity<GameMoveId>
     public DateTimeOffset MovedAt { get; private set; } = DateTimeOffset.UtcNow;
     
     /// <inheritdoc />
-    public GameMove(GameId gameId, PlayerId playerId, FieldCoordinates coordinates) : base(GameMoveId.Create())
+    public GameMove(GameId gameId, PlayerId playerId, FieldCoordinates coordinates) : base(GameMoveId.CreateNew())
     {
         GameId = gameId;
         PlayerId = playerId;

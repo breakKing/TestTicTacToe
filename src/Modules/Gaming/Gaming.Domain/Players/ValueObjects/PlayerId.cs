@@ -9,5 +9,7 @@ public sealed record PlayerId : ValueObject<Guid>
     {
     }
 
-    public static PlayerId Create() => new(Guid.NewGuid());
+    public static PlayerId CreateNew() => new(Guid.NewGuid());
+
+    public static PlayerId CreateFromGuid(Guid value) => new(value);
 }

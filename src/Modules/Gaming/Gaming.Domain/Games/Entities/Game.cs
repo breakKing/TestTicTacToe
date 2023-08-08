@@ -34,7 +34,7 @@ public sealed class Game : AggregateRoot<GameId>
     public IReadOnlyList<GameMove> Moves => _moves.AsReadOnly();
 
     /// <inheritdoc />
-    public Game(PlayerId firstPlayerId, PlayerId secondPlayerId) : base(GameId.Create())
+    public Game(PlayerId firstPlayerId, PlayerId secondPlayerId) : base(GameId.CreateNew())
     {
         FirstPlayerId = firstPlayerId;
         SecondPlayerId = secondPlayerId;

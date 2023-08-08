@@ -30,7 +30,7 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     public DateTimeOffset? GameStartedAt { get; private set; }
     
     /// <inheritdoc />
-    public Lobby(PlayerId initiatorPlayerId) : base(LobbyId.Create())
+    public Lobby(PlayerId initiatorPlayerId) : base(LobbyId.CreateNew())
     {
         InitiatorPlayerId = initiatorPlayerId;
         RaiseEvent(new LobbyCreatedDomainEvent(Id, InitiatorPlayerId));

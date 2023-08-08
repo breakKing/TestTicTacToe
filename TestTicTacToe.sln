@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gaming", "Gaming", "{2188DD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.Domain", "src\Modules\Gaming\Gaming.Domain\Gaming.Domain.csproj", "{2478909D-95AA-4F64-9FFD-6DDE916139BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.Application", "src\Modules\Gaming\Gaming.Application\Gaming.Application.csproj", "{4A2D42C1-0CE2-427F-ABE9-AD5D6B92FF6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,7 @@ Global
 		{B90A353C-85EC-424F-A15B-FEA6BC6D7B12} = {62F8DFF9-87C9-4BCF-9386-D0CC42E9F57F}
 		{2188DDAA-1365-4920-839F-50826B7515A0} = {A89A1F3B-6861-4B13-88C0-639210D63DDA}
 		{2478909D-95AA-4F64-9FFD-6DDE916139BD} = {2188DDAA-1365-4920-839F-50826B7515A0}
+		{4A2D42C1-0CE2-427F-ABE9-AD5D6B92FF6B} = {2188DDAA-1365-4920-839F-50826B7515A0}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{398826E6-6612-43B9-BB1B-AA98F736230C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -77,5 +80,9 @@ Global
 		{2478909D-95AA-4F64-9FFD-6DDE916139BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2478909D-95AA-4F64-9FFD-6DDE916139BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2478909D-95AA-4F64-9FFD-6DDE916139BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2D42C1-0CE2-427F-ABE9-AD5D6B92FF6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2D42C1-0CE2-427F-ABE9-AD5D6B92FF6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2D42C1-0CE2-427F-ABE9-AD5D6B92FF6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2D42C1-0CE2-427F-ABE9-AD5D6B92FF6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
