@@ -3,21 +3,21 @@ using ErrorOr;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
 
-namespace Gaming.Application.Lobbies.Leave;
+namespace Gaming.Application.Lobbies.Disband;
 
-internal sealed class LeaveLobbyCommandHandler : ICommandHandler<LeaveLobbyCommand>
+internal sealed class DisbandLobbyCommandHandler : ICommandHandler<DisbandLobbyCommand>
 {
     private const string LobbyNotFoundErrorDescription = "Данное лобби не существует";
     
     private readonly ILobbyWriteRepository _writeRepository;
 
-    public LeaveLobbyCommandHandler(ILobbyWriteRepository writeRepository)
+    public DisbandLobbyCommandHandler(ILobbyWriteRepository writeRepository)
     {
         _writeRepository = writeRepository;
     }
 
     /// <inheritdoc />
-    public async Task<ErrorOr<bool>> Handle(LeaveLobbyCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<bool>> Handle(DisbandLobbyCommand request, CancellationToken cancellationToken)
     {
         var lobbyId = LobbyId.CreateFromGuid(request.LobbyId);
 
@@ -30,14 +30,14 @@ internal sealed class LeaveLobbyCommandHandler : ICommandHandler<LeaveLobbyComma
         
         var playerId = PlayerId.CreateFromGuid(request.PlayerId);
 
-        var leaveResult = lobby.PlayerLeave(playerId);
+        var disbandResult = lobby.Disband(playerId);
 
-        if (leaveResult.IsError)
+        if (disbandResult.IsError)
         {
-            return leaveResult.Errors;
+            return disbandResult.Errors;
         }
         
-        _writeRepository.Update(lobby);
+        _writeRepository.Delete(lobby);
 
         return true;
     }

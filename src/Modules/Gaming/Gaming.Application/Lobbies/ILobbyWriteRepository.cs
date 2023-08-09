@@ -10,4 +10,6 @@ public interface ILobbyWriteRepository
     void Add(Lobby lobby);
 
     void Update(Lobby lobby);
+    
+    void Delete(Lobby lobby);
 }

@@ -1,5 +1,6 @@
 ﻿using Common.Application.Pipeline;
 using FluentValidation;
+using MediatR.NotificationPublishers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Application;
@@ -17,6 +18,8 @@ public static class DependencyInjection
             options.AddOpenBehavior(typeof(ExceptionHandlerPipelineBehavior<,>));
             options.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
             options.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));
+
+            options.NotificationPublisher = new TaskWhenAllPublisher();
         });
 
         services.AddValidatorsFromAssemblyContaining<TAssemblyMarker>(includeInternalTypes: true);

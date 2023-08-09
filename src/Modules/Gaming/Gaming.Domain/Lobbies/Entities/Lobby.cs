@@ -20,6 +20,8 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     private const string WrongPlayerToStartGameErrorDescription = "Данный игрок не может запустить игру в заданном лобби";
     
     private const string GameAlreadyStartedErrorDescription = "В данном лобби игра уже была запущена ранее";
+
+    private const string PlayerCantDisbandLobbyErrorDescription = "Данный игрок не может расформировать лобби";
     
     /// <summary>
     /// Идентификатор игрока, который создал лобби
@@ -62,7 +64,7 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     {
         if (playerId == InitiatorPlayerId)
         {
-            Disband();
+            Disband(playerId);
         }
         
         else if (playerId == JoinedPlayerId)
@@ -107,8 +109,20 @@ public sealed class Lobby : AggregateRoot<LobbyId>
         return true;
     }
 
-    public void Disband()
+    public ErrorOr<bool> Disband(PlayerId playerId)
     {
+        if (playerId != InitiatorPlayerId)
+        {
+            return Error.Validation(description: PlayerCantDisbandLobbyErrorDescription);
+        }
+
+        if (JoinedPlayerId is not null)
+        {
+            PlayerLeave(JoinedPlayerId);
+        }
+        
         RaiseEvent(new LobbyDisbandedDomainEvent(Id));
+
+        return true;
     }
 }

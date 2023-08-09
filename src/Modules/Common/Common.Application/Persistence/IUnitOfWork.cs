@@ -1,4 +1,4 @@
-﻿namespace Common.Application.DataAccess;
+﻿namespace Common.Application.Persistence;
 
 public interface IUnitOfWork
 {

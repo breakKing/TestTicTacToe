@@ -27,6 +27,6 @@ internal sealed class PlayerIdValidator : AbstractValidator<Guid>
     {
         var playerId = PlayerId.CreateFromGuid(playerGuid);
 
-        return await _readRepository.GetByIdAsync(playerId, ct) is not null;
+        return await _readRepository.ExistsAsync(playerId, ct);
     }
 }
