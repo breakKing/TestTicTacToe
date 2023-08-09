@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Games\" />
+      <Folder Include="Games\Move\" />
     </ItemGroup>
 
 </Project>
