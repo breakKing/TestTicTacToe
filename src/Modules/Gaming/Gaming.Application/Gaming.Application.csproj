@@ -11,8 +11,6 @@
       <ProjectReference Include="..\Gaming.Domain\Gaming.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Games\Move\" />
-    </ItemGroup>
+
 
 </Project>

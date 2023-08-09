@@ -5,14 +5,9 @@ namespace Gaming.Application.Lobbies.StartGame;
 
 internal sealed class StartGameFromLobbyCommandValidator : AbstractValidator<StartGameFromLobbyCommand>
 {
-    public StartGameFromLobbyCommandValidator(
-        IPlayerReadRepository playerReadRepository,
-        ILobbyReadRepository lobbyReadRepository)
+    public StartGameFromLobbyCommandValidator(IPlayerReadRepository playerReadRepository)
     {
         RuleFor(c => c.PlayerId)
             .SetValidator(new PlayerIdValidator(playerReadRepository));
-        
-        RuleFor(c => c.LobbyId)
-            .SetValidator(new LobbyIdValidator(lobbyReadRepository));
     }
 }

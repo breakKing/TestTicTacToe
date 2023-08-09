@@ -8,11 +8,9 @@ public sealed class Field : Entity<FieldId>
 {
     private const string CellAlreadyMarkedErrorDescription = "Данная клетка уже занята";
 
-    private const int FieldSize = 3;
-
-    private readonly FieldMark[][] _cells = Enumerable.Range(0, FieldSize)
+    private readonly FieldMark[][] _cells = Enumerable.Range(0, FieldCoordinates.FieldSize)
         .Select(_ =>
-            Enumerable.Range(0, FieldSize)
+            Enumerable.Range(0, FieldCoordinates.FieldSize)
                 .Select(_ => FieldMark.NotMarked)
                 .ToArray())
         .ToArray();
@@ -78,9 +76,9 @@ public sealed class Field : Entity<FieldId>
     
     private bool CheckColumns(FieldMark fieldMarkToCheck)
     {
-        for (int col = 0; col < FieldSize; col++)
+        for (int col = 0; col < FieldCoordinates.FieldSize; col++)
         {
-            bool isWinningColumn = Enumerable.Range(0, FieldSize)
+            bool isWinningColumn = Enumerable.Range(0, FieldCoordinates.FieldSize)
                 .All(j => _cells[j][col] == fieldMarkToCheck);
             
             if (isWinningColumn)
@@ -94,9 +92,9 @@ public sealed class Field : Entity<FieldId>
     
     private bool CheckDiagonals(FieldMark fieldMarkToCheck)
     {
-        return Enumerable.Range(0, FieldSize)
+        return Enumerable.Range(0, FieldCoordinates.FieldSize)
                    .All(j => _cells[j][j] == fieldMarkToCheck)
-               || Enumerable.Range(0, FieldSize)
-                   .All(j => _cells[FieldSize - 1 - j][FieldSize - 1 - j] == fieldMarkToCheck);
+               || Enumerable.Range(0, FieldCoordinates.FieldSize)
+                   .All(j => _cells[FieldCoordinates.FieldSize - 1 - j][FieldCoordinates.FieldSize - 1 - j] == fieldMarkToCheck);
     }
 }

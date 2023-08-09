@@ -5,14 +5,9 @@ namespace Gaming.Application.Lobbies.Join;
 
 internal sealed class JoinLobbyCommandValidator : AbstractValidator<JoinLobbyCommand>
 {
-    public JoinLobbyCommandValidator(
-        IPlayerReadRepository playerReadRepository,
-        ILobbyReadRepository lobbyReadRepository)
+    public JoinLobbyCommandValidator(IPlayerReadRepository playerReadRepository)
     {
         RuleFor(c => c.PlayerId)
             .SetValidator(new PlayerIdValidator(playerReadRepository));
-        
-        RuleFor(c => c.LobbyId)
-            .SetValidator(new LobbyIdValidator(lobbyReadRepository));
     }
 }

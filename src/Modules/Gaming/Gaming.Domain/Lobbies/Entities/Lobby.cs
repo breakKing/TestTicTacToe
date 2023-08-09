@@ -62,7 +62,7 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     {
         if (playerId == InitiatorPlayerId)
         {
-            RaiseEvent(new LobbyDisbandedDomainEvent(Id));
+            Disband();
         }
         
         else if (playerId == JoinedPlayerId)
@@ -105,5 +105,10 @@ public sealed class Lobby : AggregateRoot<LobbyId>
             GameStartedAt.Value));
 
         return true;
+    }
+
+    public void Disband()
+    {
+        RaiseEvent(new LobbyDisbandedDomainEvent(Id));
     }
 }

@@ -7,7 +7,7 @@ public sealed record GameDto(
     Guid Id,
     PlayerDto FirstPlayer,
     PlayerDto SecondPlayer,
-    FieldMark[][] Cells,
+    int[][] CellValues,
     Guid? LastMovePlayerId,
     DateTimeOffset StartedAt,
     DateTimeOffset? FinishedAt,

@@ -7,7 +7,7 @@ namespace Gaming.Application.Games.GetForPlayer;
 
 internal sealed class GetGameForPlayerQueryHandler : IQueryHandler<GetGameForPlayerQuery, GameDto>
 {
-    private const string GameNotFoundErrorDescription = "Данное лобби не существует";
+    private const string GameNotFoundErrorDescription = "Данная игра не существует";
     
     private readonly IGameReadRepository _readRepository;
 
@@ -17,7 +17,7 @@ internal sealed class GetGameForPlayerQueryHandler : IQueryHandler<GetGameForPla
     }
 
     /// <inheritdoc />
-    public async Task<ErrorOr<GameDto?>> Handle(GetGameForPlayerQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<GameDto>> Handle(GetGameForPlayerQuery request, CancellationToken cancellationToken)
     {
         var gameId = GameId.CreateFromGuid(request.GameId);
 
