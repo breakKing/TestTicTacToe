@@ -1,8 +1,8 @@
 ﻿using Common.Domain.Primitives;
-using Gaming.Domain.Lobbies.ValueObjects;
-using Gaming.Domain.Players.ValueObjects;
 using ErrorOr;
 using Gaming.Domain.Lobbies.DomainEvents;
+using Gaming.Domain.Lobbies.ValueObjects;
+using Gaming.Domain.Players.ValueObjects;
 
 namespace Gaming.Domain.Lobbies.Entities;
 
@@ -16,6 +16,10 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     private const string NoSpaceForPlayerJoinErrorDescription = "В данном лобби нет мест";
     
     private const string InsufficientPlayersForStartErrorDescription = "В данном лобби недостаточно игроков для старта игры";
+    
+    private const string WrongPlayerToStartGameErrorDescription = "Данный игрок не может запустить игру в заданном лобби";
+    
+    private const string GameAlreadyStartedErrorDescription = "В данном лобби игра уже была запущена ранее";
     
     /// <summary>
     /// Идентификатор игрока, который создал лобби
@@ -75,11 +79,21 @@ public sealed class Lobby : AggregateRoot<LobbyId>
         return true;
     }
 
-    public ErrorOr<bool> LockAndStartGame()
+    public ErrorOr<bool> LockAndStartGame(PlayerId playerId)
     {
         if (JoinedPlayerId is null)
         {
             return Error.Validation(description: InsufficientPlayersForStartErrorDescription);
+        }
+
+        if (playerId != InitiatorPlayerId)
+        {
+            return Error.Validation(description: WrongPlayerToStartGameErrorDescription);
+        }
+
+        if (GameStartedAt.HasValue)
+        {
+            return Error.Validation(description: GameAlreadyStartedErrorDescription);
         }
         
         GameStartedAt = DateTimeOffset.UtcNow;

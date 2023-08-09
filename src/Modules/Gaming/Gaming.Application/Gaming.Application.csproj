@@ -13,9 +13,6 @@
 
     <ItemGroup>
       <Folder Include="Games\" />
-      <Folder Include="Lobbies\Join\" />
-      <Folder Include="Lobbies\Leave\" />
-      <Folder Include="Lobbies\StartGame\" />
     </ItemGroup>
 
 </Project>

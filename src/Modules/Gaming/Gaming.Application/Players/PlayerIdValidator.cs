@@ -18,7 +18,7 @@ internal sealed class PlayerIdValidator : AbstractValidator<Guid>
         RuleFor(guid => guid)
             .MustAsync(PlayerExistsAsync)
             .WithMessage("Указанный игрок не существует")
-            .When(guid => guid != default);
+            .When(guid => guid != Guid.Empty);
     }
     
     private async Task<bool> PlayerExistsAsync(
