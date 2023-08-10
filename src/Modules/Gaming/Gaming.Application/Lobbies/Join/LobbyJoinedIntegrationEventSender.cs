@@ -1,5 +1,5 @@
-﻿using Common.Application.Handling;
-using Common.Application.Messaging;
+﻿using Gaming.Application.Common.Handling;
+using Gaming.Application.Common.Messaging;
 using Gaming.Domain.Lobbies.DomainEvents;
 using Gaming.IntegrationEvents.Lobbies;
 

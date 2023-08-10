@@ -1,4 +1,4 @@
-﻿using Common.Application.Handling;
+﻿using Gaming.Application.Common.Handling;
 
 namespace Gaming.Application.Lobbies.Create;
 

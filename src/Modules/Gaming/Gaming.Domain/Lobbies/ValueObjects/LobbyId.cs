@@ -1,4 +1,4 @@
-﻿using Common.Domain.Primitives;
+﻿using Gaming.Domain.Common;
 
 namespace Gaming.Domain.Lobbies.ValueObjects;
 

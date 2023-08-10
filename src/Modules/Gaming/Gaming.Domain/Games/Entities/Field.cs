@@ -1,6 +1,6 @@
-﻿using Common.Domain.Primitives;
-using Gaming.Domain.Games.ValueObjects;
+﻿using Gaming.Domain.Games.ValueObjects;
 using ErrorOr;
+using Gaming.Domain.Common;
 
 namespace Gaming.Domain.Games.Entities;
 

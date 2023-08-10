@@ -1,5 +1,5 @@
-﻿using Common.Application.Handling;
-using Common.Application.Primitives.Pagination;
+﻿using Gaming.Application.Common.Handling;
+using Gaming.Application.Common.Primitives.Pagination;
 
 namespace Gaming.Application.Lobbies.GetAvailable;
 

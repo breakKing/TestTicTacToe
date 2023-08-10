@@ -1,5 +1,5 @@
-﻿using Common.Domain.Primitives;
-using ErrorOr;
+﻿using ErrorOr;
+using Gaming.Domain.Common;
 using Gaming.Domain.Lobbies.DomainEvents;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;

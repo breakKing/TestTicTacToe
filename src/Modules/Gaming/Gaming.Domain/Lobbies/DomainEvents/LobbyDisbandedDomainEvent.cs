@@ -1,4 +1,4 @@
-﻿using Common.Domain.Primitives;
+﻿using Gaming.Domain.Common;
 using Gaming.Domain.Lobbies.ValueObjects;
 
 namespace Gaming.Domain.Lobbies.DomainEvents;

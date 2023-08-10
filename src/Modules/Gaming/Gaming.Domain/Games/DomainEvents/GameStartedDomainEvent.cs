@@ -1,4 +1,4 @@
-﻿using Common.Domain.Primitives;
+﻿using Gaming.Domain.Common;
 using Gaming.Domain.Games.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
 

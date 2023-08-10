@@ -1,4 +1,4 @@
-﻿using Common.Application.Primitives.Pagination;
+﻿using Gaming.Application.Common.Primitives.Pagination;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
 

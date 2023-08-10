@@ -1,5 +1,5 @@
-﻿using Common.Application.Handling;
-using ErrorOr;
+﻿using ErrorOr;
+using Gaming.Application.Common.Handling;
 using Gaming.Domain.Players.ValueObjects;
 
 namespace Gaming.Application.Lobbies.GetCurrent;

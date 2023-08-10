@@ -1,6 +1,6 @@
-﻿using Common.Application.Handling;
-using Common.Application.Primitives.Pagination;
-using ErrorOr;
+﻿using ErrorOr;
+using Gaming.Application.Common.Handling;
+using Gaming.Application.Common.Primitives.Pagination;
 using Gaming.Domain.Players.ValueObjects;
 
 namespace Gaming.Application.Lobbies.GetAvailable;

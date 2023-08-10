@@ -1,7 +1,7 @@
-﻿using Common.Domain.Primitives;
-using Gaming.Domain.Games.ValueObjects;
+﻿using Gaming.Domain.Games.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
 using ErrorOr;
+using Gaming.Domain.Common;
 using Gaming.Domain.Games.DomainEvents;
 
 namespace Gaming.Domain.Games.Entities;

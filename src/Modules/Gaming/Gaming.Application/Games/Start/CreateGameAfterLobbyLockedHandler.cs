@@ -1,6 +1,6 @@
 ﻿using System.Transactions;
-using Common.Application.Handling;
-using Common.Application.Persistence;
+using Gaming.Application.Common.Handling;
+using Gaming.Application.Common.Persistence;
 using Gaming.Domain.Games.Entities;
 using Gaming.Domain.Lobbies.DomainEvents;
 
