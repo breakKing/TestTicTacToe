@@ -14,12 +14,25 @@ public sealed class GameMove : Entity<GameMoveId>
     public FieldCoordinates Coordinates { get; private set; }
 
     public DateTimeOffset MovedAt { get; private set; } = DateTimeOffset.UtcNow;
-    
-    /// <inheritdoc />
-    public GameMove(GameId gameId, PlayerId playerId, FieldCoordinates coordinates) : base(GameMoveId.CreateNew())
+
+    /// <summary>
+    /// Не использовать, нужно для обхода ограничений EF Core 
+    /// </summary>
+    /// <param name="gameId"></param>
+    /// <param name="playerId"></param>
+    private GameMove(GameId gameId, PlayerId playerId) : base(GameMoveId.CreateNew())
     {
         GameId = gameId;
         PlayerId = playerId;
+
+        FieldCoordinates.TryCreate(0, 0, out var coordinates);
+
+        Coordinates = coordinates;
+    }
+    
+    /// <inheritdoc />
+    public GameMove(GameId gameId, PlayerId playerId, FieldCoordinates coordinates) : this(gameId, playerId)
+    {
         Coordinates = coordinates;
         
         RaiseEvent(new GamePlayerMovedDomainEvent(GameId, PlayerId, Coordinates, MovedAt));

@@ -20,8 +20,7 @@ internal sealed class LobbyLockedForGameStartIntegrationEventSender : IDomainEve
         var integrationEvent = new LobbyLockedForGameStartIntegrationEvent(
             domainEvent.LobbyId.Value,
             domainEvent.FirstPlayerId.Value,
-            domainEvent.SecondPlayerId.Value,
-            domainEvent.GameStartedAt);
+            domainEvent.SecondPlayerId.Value);
 
         await _messageBus.PublishAsync(integrationEvent, cancellationToken);
     }

@@ -9,6 +9,8 @@ public sealed record FieldMark : ValueObject<int>
     {
     }
 
+    public static FieldMark CreateFromValue(int value) => new(value);
+
     public static FieldMark NotMarked => new(0);
     public static FieldMark MarkedByFirstPlayer => new(1);
     public static FieldMark MarkedBySecondPlayer => new(2);

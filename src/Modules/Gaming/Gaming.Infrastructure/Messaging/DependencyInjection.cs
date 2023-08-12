@@ -20,13 +20,14 @@ public static class DependencyInjection
                 cfg.Host(rabbitConfig.Host, "/", h => {
                     h.Username(rabbitConfig.Username);
                     h.Password(rabbitConfig.Password);
+                    h.MaxMessageSize(uint.MaxValue);
                 });
 
                 cfg.ConfigureEndpoints(context);
             });
         });
 
-        services.AddSingleton<IMessageBus, RabbitMessageBus>();
+        services.AddScoped<IMessageBus, RabbitMessageBus>();
         
         return services;
     }

@@ -7,5 +7,4 @@ namespace Gaming.Domain.Lobbies.DomainEvents;
 public sealed record LobbyLockedForGameStartDomainEvent(
     LobbyId LobbyId,
     PlayerId FirstPlayerId,
-    PlayerId SecondPlayerId,
-    DateTimeOffset GameStartedAt) : DomainEvent;
+    PlayerId SecondPlayerId) : DomainEvent;

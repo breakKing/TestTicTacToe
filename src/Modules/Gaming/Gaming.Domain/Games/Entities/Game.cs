@@ -32,17 +32,7 @@ public sealed class Game : AggregateRoot<GameId>
     public GameResult Result { get; private set; } = GameResult.StillInProgress;
 
     public IReadOnlyList<GameMove> Moves => _moves.AsReadOnly();
-
-    /// <inheritdoc />
-    public Game(PlayerId firstPlayerId, PlayerId secondPlayerId) : base(GameId.CreateNew())
-    {
-        FirstPlayerId = firstPlayerId;
-        SecondPlayerId = secondPlayerId;
-        Field = new Field(Id);
-        
-        RaiseEvent(new GameStartedDomainEvent(Id, FirstPlayerId, SecondPlayerId, StartedAt));
-    }
-
+    
     public PlayerId? WinnerPlayerId 
     {
         get
@@ -77,6 +67,16 @@ public sealed class Game : AggregateRoot<GameId>
 
             return null;
         }
+    }
+
+    /// <inheritdoc />
+    public Game(PlayerId firstPlayerId, PlayerId secondPlayerId) : base(GameId.CreateNew())
+    {
+        FirstPlayerId = firstPlayerId;
+        SecondPlayerId = secondPlayerId;
+        Field = new Field(Id);
+        
+        RaiseEvent(new GameStartedDomainEvent(Id, FirstPlayerId, SecondPlayerId, StartedAt));
     }
 
     public ErrorOr<bool> Move(PlayerId playerId, FieldCoordinates coordinates)

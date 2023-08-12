@@ -47,8 +47,8 @@ public sealed class Field : Entity<FieldId>
     
     private ErrorOr<bool> PlayerMove(FieldCoordinates coordinates, FieldMark markToSet)
     {
-        var x = coordinates.Value.X;
-        var y = coordinates.Value.Y; 
+        var x = coordinates.X;
+        var y = coordinates.Y; 
         
         if (_cells[x][y] != FieldMark.NotMarked)
         {

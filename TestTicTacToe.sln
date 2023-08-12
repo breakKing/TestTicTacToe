@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.IntegrationEvents", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.Infrastructure", "src\Modules\Gaming\Gaming.Infrastructure\Gaming.Infrastructure.csproj", "{DF9EEB51-A07E-492C-80F9-B3F8630D658D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gaming.Presentation", "src\Modules\Gaming\Gaming.Presentation\Gaming.Presentation.csproj", "{1FE50069-8D40-4295-BFCE-74810186CA6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,7 @@ Global
 		{4A2D42C1-0CE2-427F-ABE9-AD5D6B92FF6B} = {2188DDAA-1365-4920-839F-50826B7515A0}
 		{D104C175-16F0-4477-A57B-98840FDD9C12} = {2188DDAA-1365-4920-839F-50826B7515A0}
 		{DF9EEB51-A07E-492C-80F9-B3F8630D658D} = {2188DDAA-1365-4920-839F-50826B7515A0}
+		{1FE50069-8D40-4295-BFCE-74810186CA6A} = {2188DDAA-1365-4920-839F-50826B7515A0}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{398826E6-6612-43B9-BB1B-AA98F736230C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -67,5 +70,9 @@ Global
 		{DF9EEB51-A07E-492C-80F9-B3F8630D658D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF9EEB51-A07E-492C-80F9-B3F8630D658D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF9EEB51-A07E-492C-80F9-B3F8630D658D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE50069-8D40-4295-BFCE-74810186CA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE50069-8D40-4295-BFCE-74810186CA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE50069-8D40-4295-BFCE-74810186CA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE50069-8D40-4295-BFCE-74810186CA6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

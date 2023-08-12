@@ -20,8 +20,8 @@ internal sealed class PlayerMovedIntegrationEventSender : IDomainEventHandler<Ga
         var integrationEvent = new GamePlayerMovedIntegrationEvent(
             domainEvent.GameId.Value,
             domainEvent.PlayerId.Value,
-            domainEvent.Coordinates.Value.X,
-            domainEvent.Coordinates.Value.Y,
+            domainEvent.Coordinates.X,
+            domainEvent.Coordinates.Y,
             domainEvent.MovedAt);
 
         await _messageBus.PublishAsync(integrationEvent, cancellationToken);

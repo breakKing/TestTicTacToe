@@ -8,6 +8,8 @@ public sealed record GameResult : ValueObject<int>
     private GameResult(int value) : base(value)
     {
     }
+
+    public static GameResult CreateFromValue(int value) => new(value);
     
     public static GameResult StillInProgress => new(0);
     public static GameResult Draw => new(1);

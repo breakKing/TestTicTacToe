@@ -3,5 +3,4 @@
 public sealed record LobbyLockedForGameStartIntegrationEvent(
     Guid LobbyId,
     Guid FirstPlayerId,
-    Guid SecondPlayerId,
-    DateTimeOffset GameStartedAt);
+    Guid SecondPlayerId);

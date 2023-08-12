@@ -30,7 +30,7 @@ internal sealed class StartGameFromLobbyCommandHandler : ICommandHandler<StartGa
 
         var playerId = PlayerId.CreateFromGuid(request.PlayerId);
 
-        var startResult = lobby.LockAndStartGame(playerId);
+        var startResult = lobby.Lock(playerId);
 
         if (startResult.IsError)
         {

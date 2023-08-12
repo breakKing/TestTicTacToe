@@ -19,7 +19,7 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     
     private const string WrongPlayerToStartGameErrorDescription = "Данный игрок не может запустить игру в заданном лобби";
     
-    private const string GameAlreadyStartedErrorDescription = "В данном лобби игра уже была запущена ранее";
+    private const string LobbyAlreadyLockedErrorDescription = "В данном лобби уже запущена игра";
 
     private const string PlayerCantDisbandLobbyErrorDescription = "Данный игрок не может расформировать лобби";
     
@@ -33,7 +33,10 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     /// </summary>
     public PlayerId? JoinedPlayerId { get; private set; }
     
-    public DateTimeOffset? GameStartedAt { get; private set; }
+    /// <summary>
+    /// Показатель, что лобби заблокировано и игра начинается
+    /// </summary>
+    public bool IsLocked { get; private set; }
     
     /// <inheritdoc />
     public Lobby(PlayerId initiatorPlayerId) : base(LobbyId.CreateNew())
@@ -44,6 +47,11 @@ public sealed class Lobby : AggregateRoot<LobbyId>
 
     public ErrorOr<bool> PlayerJoin(PlayerId playerId)
     {
+        if (IsLocked)
+        {
+            return Error.Validation(description: LobbyAlreadyLockedErrorDescription);
+        }
+        
         if (playerId == InitiatorPlayerId)
         {
             return Error.Validation(description: WrongPlayerJoinErrorDescription);
@@ -62,6 +70,11 @@ public sealed class Lobby : AggregateRoot<LobbyId>
 
     public ErrorOr<bool> PlayerLeave(PlayerId playerId)
     {
+        if (IsLocked)
+        {
+            return Error.Validation(description: LobbyAlreadyLockedErrorDescription);
+        }
+        
         if (playerId == InitiatorPlayerId)
         {
             Disband(playerId);
@@ -81,8 +94,18 @@ public sealed class Lobby : AggregateRoot<LobbyId>
         return true;
     }
 
-    public ErrorOr<bool> LockAndStartGame(PlayerId playerId)
+    /// <summary>
+    /// Заблокировать лобби перед началом игры
+    /// </summary>
+    /// <param name="playerId"></param>
+    /// <returns></returns>
+    public ErrorOr<bool> Lock(PlayerId playerId)
     {
+        if (IsLocked)
+        {
+            return Error.Validation(description: LobbyAlreadyLockedErrorDescription);
+        }
+        
         if (JoinedPlayerId is null)
         {
             return Error.Validation(description: InsufficientPlayersForStartErrorDescription);
@@ -93,24 +116,23 @@ public sealed class Lobby : AggregateRoot<LobbyId>
             return Error.Validation(description: WrongPlayerToStartGameErrorDescription);
         }
 
-        if (GameStartedAt.HasValue)
-        {
-            return Error.Validation(description: GameAlreadyStartedErrorDescription);
-        }
-        
-        GameStartedAt = DateTimeOffset.UtcNow;
+        IsLocked = true;
         
         RaiseEvent(new LobbyLockedForGameStartDomainEvent(
             Id,
             InitiatorPlayerId,
-            JoinedPlayerId,
-            GameStartedAt.Value));
+            JoinedPlayerId));
 
         return true;
     }
 
     public ErrorOr<bool> Disband(PlayerId playerId)
     {
+        if (IsLocked)
+        {
+            return Error.Validation(description: LobbyAlreadyLockedErrorDescription);
+        }
+        
         if (playerId != InitiatorPlayerId)
         {
             return Error.Validation(description: PlayerCantDisbandLobbyErrorDescription);
