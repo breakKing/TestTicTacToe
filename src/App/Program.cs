@@ -1,11 +1,9 @@
-using Gaming.Presentation;
+using App.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddGamingModule(builder.Configuration);
+builder.Configure();
 
 var app = builder.Build();
-
-app.MapGet("/", () => "Hello World!");
+app.Configure();
 
 app.Run();
