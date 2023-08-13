@@ -2,7 +2,7 @@
 
 namespace Identity.Core.Common.Jwt;
 
-internal sealed class JwtConfiguration
+public sealed class JwtConfiguration
 {
     public const string SectionName = "Jwt";
 
@@ -10,5 +10,6 @@ internal sealed class JwtConfiguration
     public string TokenSigningKey { get; init; } = null!;
     
     [Required]
-    public int TokenLifeTimeInSeconds { get; init; } = (int)TimeSpan.FromSeconds(3600).TotalSeconds;
+    [Range(900, int.MaxValue)]
+    public int TokenLifeTimeInSeconds { get; init; }
 }

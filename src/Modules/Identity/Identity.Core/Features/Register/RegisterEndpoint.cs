@@ -2,6 +2,7 @@
 using Common.Api;
 using FastEndpoints;
 using Identity.Core.Common.Identity.Entites;
+using Identity.IntegrationEvents;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -28,6 +29,8 @@ public sealed class RegisterEndpoint : EndpointBase<RegisterRequest, Results<Ok,
     {
         Post("register");
         Group<UserGroup>();
+        
+        AllowAnonymous();
 
         ConfigureSwaggerDescription(
             new RegisterSummary(), 
@@ -53,6 +56,10 @@ public sealed class RegisterEndpoint : EndpointBase<RegisterRequest, Results<Ok,
         };
 
         await _userManager.CreateAsync(user, req.Password);
+        
+        await _publishEndpoint.Publish(
+            new UserRegisteredIntegrationEvent(user.Id, user.UserName!), 
+            ct);
 
         return TypedResults.Ok();
     }

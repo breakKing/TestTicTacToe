@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Identity.Core.Features;
 
-internal sealed class TokenService
+public sealed class TokenService
 {
     public const string SubClaimName = "sub";
     

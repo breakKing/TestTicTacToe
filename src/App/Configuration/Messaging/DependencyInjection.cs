@@ -12,6 +12,8 @@ public static class DependencyInjection
         
         services.AddMassTransit(x =>
         {
+            x.SetSnakeCaseEndpointNameFormatter();
+            
             x.UsingRabbitMq((context,cfg) =>
             {
                 cfg.Host(rabbitConfig.Host, "/", h => {
