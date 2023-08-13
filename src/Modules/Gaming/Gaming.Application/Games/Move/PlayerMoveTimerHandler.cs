@@ -23,23 +23,27 @@ internal sealed class PlayerMoveTimerHandler :
     }
 
     /// <inheritdoc />
-    public async Task Handle(GameStartedDomainEvent domainEvent, CancellationToken cancellationToken)
+    public Task Handle(GameStartedDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        await CountdownAndRandomMoveAsync(
+        Task.Run(() => CountdownAndRandomMoveAsync(
             domainEvent.GameId,
             domainEvent.FirstPlayerId,
             null,
-            cancellationToken);
+            cancellationToken));
+        
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public async Task Handle(GamePlayerMovedDomainEvent domainEvent, CancellationToken cancellationToken)
+    public Task Handle(GamePlayerMovedDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        await CountdownAndRandomMoveAsync(
+        Task.Run(() => CountdownAndRandomMoveAsync(
             domainEvent.GameId,
             domainEvent.PlayerId,
             domainEvent.MoveId,
-            cancellationToken);
+            cancellationToken));
+        
+        return Task.CompletedTask;
     }
 
     private async Task CountdownAndRandomMoveAsync(

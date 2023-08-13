@@ -34,7 +34,7 @@ internal sealed class LobbyConfiguration : EntityTypeConfigurationBase<Lobby, Lo
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.Property(l => l.JoinedPlayerId)
-            .HasConversion(new PlayerIdWithNullConverter())
+            .HasConversion(new PlayerIdConverter())
             .IsRequired(false)
             .HasComment("Присоединившийся игрок");
 

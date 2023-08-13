@@ -23,11 +23,11 @@ public sealed class GetGameForCurrentPlayerSummary : EndpointSummaryBase
             Id = Guid.NewGuid(),
             Username = "test_user_2"
         },
-        CellValues = new[]
+        Field = new[]
         {
-            new []{ 0, 0, 1 },
-            new []{ 0, 1, 0 },
-            new []{ 2, 2, 0 }
+            new []{ FieldMark.CreateFromValue(1), FieldMark.CreateFromValue(0), FieldMark.CreateFromValue(0) },
+            new []{ FieldMark.CreateFromValue(2), FieldMark.CreateFromValue(1), FieldMark.CreateFromValue(1) },
+            new []{ FieldMark.CreateFromValue(2), FieldMark.CreateFromValue(0), FieldMark.CreateFromValue(0) }
         },
         LastMovePlayerId = FirstPlayerId,
         StartedAt = DateTimeOffset.Now.AddMinutes(-2),

@@ -58,7 +58,7 @@ internal sealed class GameConfiguration : EntityTypeConfigurationBase<Game, Game
             .OnDelete(DeleteBehavior.NoAction);
         
         builder.Property(g => g.LastMovePlayerId)
-            .HasConversion(new PlayerIdWithNullConverter())
+            .HasConversion(new PlayerIdConverter())
             .HasComment("Игрок, сделавший последний ход");
 
         builder.Navigation(g => g.Field)

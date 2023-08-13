@@ -50,11 +50,7 @@ internal sealed class GameReadRepository : IGameReadRepository
                         Id = g.SecondPlayerId,
                         Username = ""
                     },
-                    CellValues = g.Field.Cells
-                        .Select(c => c
-                            .Select(fm => fm.Value)
-                            .ToArray())
-                        .ToArray(),
+                    Field = g.Field.Cells,
                     LastMovePlayerId = g.LastMovePlayerId,
                     StartedAt = g.StartedAt,
                     FinishedAt = g.FinishedAt,
@@ -78,7 +74,7 @@ internal sealed class GameReadRepository : IGameReadRepository
                         Id = p.Id,
                         Username = p.Username
                     },
-                    CellValues = g.CellValues,
+                    Field = g.Field,
                     LastMovePlayerId = g.LastMovePlayerId,
                     StartedAt = g.StartedAt,
                     FinishedAt = g.FinishedAt,

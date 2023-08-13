@@ -12,13 +12,3 @@ internal sealed class GameMoveIdConverter : ValueConverter<GameMoveId, Guid>
     {
     }
 }
-
-internal sealed class GameMoveIdWithNullConverter : ValueConverter<GameMoveId?, Guid?>
-{
-    public GameMoveIdWithNullConverter() : 
-        base(
-            playerId => playerId == null ? null : playerId.Value,
-            value => value.HasValue ? null : GameMoveId.CreateFromGuid(value!.Value))
-    {
-    }
-}

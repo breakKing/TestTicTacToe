@@ -12,13 +12,3 @@ internal sealed class LobbyIdConverter : ValueConverter<LobbyId, Guid>
     {
     }
 }
-
-internal sealed class LobbyIdWithNullConverter : ValueConverter<LobbyId?, Guid?>
-{
-    public LobbyIdWithNullConverter() : 
-        base(
-            playerId => playerId == null ? null : playerId.Value,
-            value => value.HasValue ? null : LobbyId.CreateFromGuid(value!.Value))
-    {
-    }
-}
