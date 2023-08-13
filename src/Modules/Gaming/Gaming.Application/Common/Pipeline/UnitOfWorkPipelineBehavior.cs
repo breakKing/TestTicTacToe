@@ -39,6 +39,6 @@ public sealed class UnitOfWorkPipelineBehavior<TRequest, TResponse> : IPipelineB
 
     private static bool IsCommand()
     {
-        return typeof(TResponse).Name.EndsWith("Command");
+        return typeof(TRequest).Name.EndsWith("Command");
     }
 }

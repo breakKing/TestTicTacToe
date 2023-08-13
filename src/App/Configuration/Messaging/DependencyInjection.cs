@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Gaming.Presentation.Consumers;
+using MassTransit;
 
 namespace App.Configuration.Messaging;
 
@@ -13,6 +14,8 @@ public static class DependencyInjection
         services.AddMassTransit(x =>
         {
             x.SetSnakeCaseEndpointNameFormatter();
+
+            x.AddConsumer<UserRegisteredConsumer>();
             
             x.UsingRabbitMq((context,cfg) =>
             {

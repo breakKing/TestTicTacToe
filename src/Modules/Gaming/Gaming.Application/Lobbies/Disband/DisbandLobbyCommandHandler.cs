@@ -37,7 +37,7 @@ internal sealed class DisbandLobbyCommandHandler : ICommandHandler<DisbandLobbyC
             return disbandResult.Errors;
         }
         
-        _writeRepository.Delete(lobby);
+        _writeRepository.Update(lobby);
 
         return true;
     }

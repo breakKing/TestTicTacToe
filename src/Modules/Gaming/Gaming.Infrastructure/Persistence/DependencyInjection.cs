@@ -24,8 +24,6 @@ public static class DependencyInjection
                 configuration.GetConnectionString("GamingDatabase"),
                 npgsql =>
                 {
-                    npgsql.CommandTimeout(30);
-                    npgsql.EnableRetryOnFailure(3);
                     npgsql.MigrationsHistoryTable("migrations", "Maintenance");
                     npgsql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 });

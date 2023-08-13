@@ -1,4 +1,5 @@
-﻿using FastEndpoints.Security;
+﻿using System.IdentityModel.Tokens.Jwt;
+using FastEndpoints.Security;
 using Identity.Core.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,8 @@ internal static class DependencyInjection
         services.AddJWTBearerAuth(jwtConfig.TokenSigningKey);
 
         services.AddTransient<TokenService>();
+
+        JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
         
         return services;
     }

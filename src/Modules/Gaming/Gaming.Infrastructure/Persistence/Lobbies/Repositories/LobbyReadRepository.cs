@@ -2,7 +2,6 @@
 using Gaming.Application.Lobbies;
 using Gaming.Application.Players;
 using Gaming.Domain.Lobbies.Entities;
-using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.Entities;
 using Gaming.Domain.Players.ValueObjects;
 using Gaming.Infrastructure.Persistence.Common;
@@ -52,6 +51,7 @@ internal sealed class LobbyReadRepository : ILobbyReadRepository
         var count = await mainQuery.CountAsync(ct);
 
         mainQuery = mainQuery
+            .OrderBy(l => l.Id)
             .Paginate(paginationRequest)
             .AsNoTracking();
         

@@ -9,9 +9,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddIdentityModule(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddJwtAuth(configuration);
         services.AddIdentity(configuration);
-        
+        services.AddJwtAuth(configuration);
+
         return services;
     }
 }

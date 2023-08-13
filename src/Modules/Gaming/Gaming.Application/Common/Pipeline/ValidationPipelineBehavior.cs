@@ -27,9 +27,14 @@ public sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineB
         }
         
         var context = new ValidationContext<TRequest>(request);
+
+        var validationTasks = _validators
+            .Select(x => x.ValidateAsync(context, cancellationToken))
+            .ToList();
+
+        var validationResults = await Task.WhenAll(validationTasks);
         
-        var errorsDictionary = _validators
-            .Select(x => x.Validate(context))
+        var errorsDictionary = validationResults
             .SelectMany(x => x.Errors)
             .Where(x => x != null)
             .GroupBy(

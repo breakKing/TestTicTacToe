@@ -17,8 +17,6 @@ internal static class DependencyInjection
                 configuration.GetConnectionString("IdentityDatabase"),
                 npgsql =>
                 {
-                    npgsql.CommandTimeout(30);
-                    npgsql.EnableRetryOnFailure(3);
                     npgsql.MigrationsHistoryTable("migrations", "Maintenance");
                     npgsql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 });
@@ -26,7 +24,7 @@ internal static class DependencyInjection
             ctxOptions.UseSnakeCaseNamingConvention();
         });
 
-        services.AddIdentity<User, Role>(
+        services.AddIdentityCore<User>(
                 opt =>
                 {
                     opt.SignIn.RequireConfirmedAccount = false;
@@ -45,8 +43,15 @@ internal static class DependencyInjection
                     opt.Lockout.MaxFailedAccessAttempts = 1000;
 
                     opt.User.RequireUniqueEmail = false;
+
+                    opt.Stores.ProtectPersonalData = false;
                 })
-            .AddEntityFrameworkStores<IdentityContext>();
+            .AddRoles<Role>()
+            .AddEntityFrameworkStores<IdentityContext>()
+            .AddDefaultTokenProviders()
+            .AddUserManager<UserManager<User>>()
+            .AddRoleManager<RoleManager<Role>>()
+            .AddSignInManager<SignInManager<User>>();
         
         return services;
     }

@@ -58,7 +58,7 @@ public sealed class RegisterEndpoint : EndpointBase<RegisterRequest, Results<Ok,
         await _userManager.CreateAsync(user, req.Password);
         
         await _publishEndpoint.Publish(
-            new UserRegisteredIntegrationEvent(user.Id, user.UserName!), 
+            new UserRegisteredIntegrationEvent(user.Id, user.UserName), 
             ct);
 
         return TypedResults.Ok();

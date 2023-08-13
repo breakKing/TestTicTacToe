@@ -13,7 +13,7 @@ internal sealed class PlayerMoveTimerHandler :
     IDomainEventHandler<GameStartedDomainEvent>,
     IDomainEventHandler<GamePlayerMovedDomainEvent>
 {
-    private static readonly TimeSpan MoveTime = TimeSpan.FromSeconds(15);
+    private static readonly TimeSpan MoveTime = TimeSpan.FromSeconds(120);
 
     private readonly IServiceProvider _serviceProvider;
 
