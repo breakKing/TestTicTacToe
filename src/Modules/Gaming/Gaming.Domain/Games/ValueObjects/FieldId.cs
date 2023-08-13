@@ -11,4 +11,6 @@ public sealed record FieldId : ValueObject<Guid>
     
     public static FieldId CreateNew() => new(Guid.NewGuid());
     public static FieldId CreateFromGuid(Guid value) => new(value);
+    
+    public static implicit operator Guid(FieldId gameId) => gameId.Value;
 }

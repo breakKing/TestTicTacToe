@@ -22,7 +22,7 @@ internal sealed class CreateGameAfterLobbyLockedHandler : IDomainEventHandler<Lo
     {
         using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         
-        var game = new Game(domainEvent.FirstPlayerId, domainEvent.SecondPlayerId);
+        var game = new Game(domainEvent.FirstPlayerId, domainEvent.SecondPlayerId, domainEvent.LobbyId);
 
         _writeRepository.Add(game);
         

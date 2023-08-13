@@ -10,8 +10,6 @@ public interface ILobbyReadRepository
     
     ValueTask<LobbyDto?> GetPlayerLobbyAsync(PlayerId playerId, CancellationToken ct = default);
     
-    ValueTask<LobbyDto?> GetByIdAsync(LobbyId lobbyId, CancellationToken ct = default);
-    
     ValueTask<PagedList<LobbyDto>> GetAvailableLobbiesAsync(
         PlayerId playerId, 
         PaginationRequest paginationRequest,

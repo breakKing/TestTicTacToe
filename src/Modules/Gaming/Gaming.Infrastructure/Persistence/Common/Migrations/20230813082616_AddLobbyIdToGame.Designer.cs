@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Gaming.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Gaming.Infrastructure.Persistence.Common.Migrations
 {
     [DbContext(typeof(GamingContext))]
-    partial class GamingContextModelSnapshot : ModelSnapshot
+    [Migration("20230813082616_AddLobbyIdToGame")]
+    partial class AddLobbyIdToGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

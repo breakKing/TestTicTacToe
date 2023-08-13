@@ -1,8 +1,10 @@
 ﻿using Gaming.Domain.Games.Entities;
 using Gaming.Domain.Games.ValueObjects;
+using Gaming.Domain.Lobbies.Entities;
 using Gaming.Domain.Players.Entities;
 using Gaming.Infrastructure.Persistence.Common;
 using Gaming.Infrastructure.Persistence.Games.Converters;
+using Gaming.Infrastructure.Persistence.Lobbies.Converters;
 using Gaming.Infrastructure.Persistence.Players.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -21,6 +23,17 @@ internal sealed class GameConfiguration : EntityTypeConfigurationBase<Game, Game
             .HasComment("Идентификатор");
         
         builder.HasKey(g => g.Id);
+
+        builder.Property(g => g.StartedFromLobbyId)
+            .HasConversion(new LobbyIdConverter())
+            .HasComment("Лобби, из которого игра была запущена");
+
+        builder.HasOne<Lobby>()
+            .WithMany()
+            .HasForeignKey(g => g.StartedFromLobbyId)
+            .HasConstraintName("fk_games_lobbies_started_from_lobby_id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
         
         builder.Property(g => g.FirstPlayerId)
             .HasConversion(new PlayerIdConverter())

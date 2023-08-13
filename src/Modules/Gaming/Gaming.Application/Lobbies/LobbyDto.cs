@@ -2,7 +2,9 @@
 
 namespace Gaming.Application.Lobbies;
 
-public sealed record LobbyDto(
-    Guid Id,
-    PlayerDto InitiatorPlayer,
-    PlayerDto? JoinedPlayer);
+public sealed class LobbyDto
+{
+    public required Guid Id { get; init; }
+    public required PlayerDto InitiatorPlayer { get; init; }
+    public PlayerDto? JoinedPlayer { get; init; }
+}

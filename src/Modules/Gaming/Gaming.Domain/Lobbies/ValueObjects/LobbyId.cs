@@ -10,6 +10,7 @@ public sealed record LobbyId : ValueObject<Guid>
     }
 
     public static LobbyId CreateNew() => new(Guid.NewGuid());
-    
     public static LobbyId CreateFromGuid(Guid value) => new(value);
+    
+    public static implicit operator Guid(LobbyId gameId) => gameId.Value;
 }
