@@ -26,7 +26,8 @@ public sealed class GetUserInfoEndpoint : EndpointBase<GetUserInfoRequest, Resul
         Group<UserGroup>();
         
         ConfigureSwaggerDescription(
-            new GetUserInfoSummary(), 
+            new GetUserInfoSummary(),
+            true,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.InternalServerError);

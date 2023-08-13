@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using Common.Api;
-using ErrorOr;
 using FastEndpoints;
 using Gaming.Application.Lobbies.Leave;
+using Gaming.Application.Lobbies.Lock;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -26,6 +26,7 @@ public sealed class LockLobbyEndpoint : EndpointBase<LockLobbyRequest, Results<O
 
         ConfigureSwaggerDescription(
             new LockLobbySummary(), 
+            true,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.NotFound,
@@ -39,7 +40,7 @@ public sealed class LockLobbyEndpoint : EndpointBase<LockLobbyRequest, Results<O
     {
         var userId = GetCurrentUserId()!;
 
-        var command = new LeaveLobbyCommand(userId.Value, req.LobbyId);
+        var command = new LobbyLockCommand(userId.Value, req.LobbyId);
 
         var result = await _sender.Send(command, ct);
 

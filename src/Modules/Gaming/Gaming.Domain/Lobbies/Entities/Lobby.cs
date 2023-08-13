@@ -37,6 +37,14 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     /// Показатель, что лобби заблокировано и игра начинается
     /// </summary>
     public bool IsLocked { get; private set; }
+
+    /// <summary>
+    /// Не использовать, необходим для обхода ограничений EF Core
+    /// </summary>
+    private Lobby() : base(LobbyId.CreateNew())
+    {
+        InitiatorPlayerId = PlayerId.CreateNew();
+    }
     
     /// <inheritdoc />
     public Lobby(PlayerId initiatorPlayerId) : base(LobbyId.CreateNew())

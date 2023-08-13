@@ -29,6 +29,7 @@ public sealed class GetGameForCurrentPlayerEndpoint : EndpointBase<
 
         ConfigureSwaggerDescription(
             new GetGameForCurrentPlayerSummary(), 
+            true,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.NotFound,

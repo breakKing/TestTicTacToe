@@ -9,7 +9,7 @@ public sealed class Player : AggregateRoot<PlayerId>
 
     private Player(string username) : base(PlayerId.CreateNew())
     {
-        
+        Username = username;
     }
     
     /// <inheritdoc />

@@ -26,6 +26,7 @@ public sealed class GetAvailableLobbiesEndpoint : EndpointBase<GetAvailableLobbi
 
         ConfigureSwaggerDescription(
             new GetAvailableLobbiesSummary(), 
+            false,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.InternalServerError);

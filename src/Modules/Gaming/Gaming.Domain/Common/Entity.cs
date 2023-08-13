@@ -71,4 +71,10 @@ public abstract class Entity<TKey> : IEquatable<Entity<TKey>>, IDomainEventAggre
     {
         _domainEvents.Add(domainEvent);
     }
+    
+    /// <inheritdoc />
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
+    }
 }

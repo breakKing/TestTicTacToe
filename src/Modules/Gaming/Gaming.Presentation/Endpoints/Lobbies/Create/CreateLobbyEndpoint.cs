@@ -2,14 +2,13 @@
 using Common.Api;
 using FastEndpoints;
 using Gaming.Application.Lobbies.Create;
-using Gaming.Application.Lobbies.Join;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Gaming.Presentation.Endpoints.Lobbies.Create;
 
-public sealed class CreateLobbyEndpoint : EndpointBase<CreateLobbyRequest, Results<Ok, ProblemDetails>>
+public sealed class CreateLobbyEndpoint : EndpointBase<EmptyRequest, Results<Ok, ProblemDetails>>
 {
     private readonly ISender _sender;
 
@@ -26,6 +25,7 @@ public sealed class CreateLobbyEndpoint : EndpointBase<CreateLobbyRequest, Resul
 
         ConfigureSwaggerDescription(
             new CreateLobbySummary(), 
+            true,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.InternalServerError);
@@ -33,7 +33,7 @@ public sealed class CreateLobbyEndpoint : EndpointBase<CreateLobbyRequest, Resul
 
     /// <inheritdoc />
     public override async Task<Results<Ok, ProblemDetails>> ExecuteAsync(
-        CreateLobbyRequest req, 
+        EmptyRequest req, 
         CancellationToken ct)
     {
         var userId = GetCurrentUserId()!;

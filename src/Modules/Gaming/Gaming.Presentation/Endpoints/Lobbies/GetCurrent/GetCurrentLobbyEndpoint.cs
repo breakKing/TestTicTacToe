@@ -29,6 +29,7 @@ public sealed class GetCurrentLobbyEndpoint : EndpointBase<
 
         ConfigureSwaggerDescription(
             new GetCurrentLobbySummary(), 
+            true,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.NotFound,

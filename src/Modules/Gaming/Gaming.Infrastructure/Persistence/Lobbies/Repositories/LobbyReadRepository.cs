@@ -6,6 +6,7 @@ using Gaming.Domain.Players.Entities;
 using Gaming.Domain.Players.ValueObjects;
 using Gaming.Infrastructure.Persistence.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Gaming.Infrastructure.Persistence.Lobbies.Repositories;
 
@@ -65,7 +66,7 @@ internal sealed class LobbyReadRepository : ILobbyReadRepository
     private IQueryable<LobbyDto> SelectDto(IQueryable<Lobby> query)
     {
         var resultQuery = JoinWithFirstPlayer(query);
-        resultQuery = JoinWithSecondPlayer(resultQuery);
+        resultQuery = LeftJoinWithSecondPlayer(resultQuery);
 
         return resultQuery;
     }
@@ -95,18 +96,21 @@ internal sealed class LobbyReadRepository : ILobbyReadRepository
                 });
     }
     
-    private IQueryable<LobbyDto> JoinWithSecondPlayer(IQueryable<LobbyDto> query)
+    private IQueryable<LobbyDto> LeftJoinWithSecondPlayer(IQueryable<LobbyDto> query)
     {
         return query
-            .Join(
+            .GroupJoin(
                 _context.Set<Player>(),
                 l => l.JoinedPlayer!.Id,
                 p => p.Id,
-                (l, p) => new LobbyDto
+                (l, pg) => new { l, pg })
+            .SelectMany(
+                t => t.pg.DefaultIfEmpty(),
+                (t, p) => new LobbyDto
                 {
-                    Id = l.Id,
-                    InitiatorPlayer = l.InitiatorPlayer,
-                    JoinedPlayer = new PlayerDto
+                    Id = t.l.Id,
+                    InitiatorPlayer = t.l.InitiatorPlayer,
+                    JoinedPlayer = p == null ? null : new PlayerDto
                     {
                         Id = p.Id,
                         Username = p.Username

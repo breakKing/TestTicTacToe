@@ -22,7 +22,13 @@ internal sealed class DomainEventPublisherInterceptor : SaveChangesInterceptor
         var domainEvents = eventData.Context!
             .ChangeTracker
             .Entries<IDomainEventAggregator>()
-            .SelectMany(e => e.Entity.DomainEvents);
+            .SelectMany(e => e.Entity.DomainEvents)
+            .ToList();
+
+        foreach (var entry in eventData.Context!.ChangeTracker.Entries<IDomainEventAggregator>())
+        {
+            entry.Entity.ClearDomainEvents();
+        }
         
         var finalResult = await base.SavingChangesAsync(eventData, result, cancellationToken);
 

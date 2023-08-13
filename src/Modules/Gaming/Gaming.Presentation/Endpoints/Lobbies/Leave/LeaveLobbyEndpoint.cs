@@ -26,6 +26,7 @@ public sealed class LeaveLobbyEndpoint : EndpointBase<LeaveLobbyRequest, Results
 
         ConfigureSwaggerDescription(
             new LeaveLobbySummary(), 
+            true,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.NotFound,

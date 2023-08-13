@@ -25,6 +25,7 @@ public sealed class PlayerMoveEndpoint : EndpointBase<PlayerMoveRequest, Results
 
         ConfigureSwaggerDescription(
             new PlayerMoveSummary(), 
+            false,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.InternalServerError);

@@ -34,6 +34,7 @@ public sealed class RegisterEndpoint : EndpointBase<RegisterRequest, Results<Ok,
 
         ConfigureSwaggerDescription(
             new RegisterSummary(), 
+            false,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.InternalServerError);

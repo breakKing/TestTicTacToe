@@ -9,34 +9,34 @@ namespace Gaming.Domain.Games.Entities;
 
 public sealed class Game : AggregateRoot<GameId>
 {
-    private const string GameNotInProgressErrorDescription = "Игра уже окончена"; 
-    private const string PlayerNotInGameErrorDescription = "Игрок не является участником данной игры"; 
+    private const string GameNotInProgressErrorDescription = "Игра уже окончена";
+    private const string PlayerNotInGameErrorDescription = "Игрок не является участником данной игры";
     private const string PlayerCantMoveErrorDescription = "Игрок не может сделать свой ход сейчас";
 
     private readonly List<GameMove> _moves = new();
-    
+
     public LobbyId StartedFromLobbyId { get; private set; }
-    
+
     public PlayerId FirstPlayerId { get; private set; }
-    
+
     public PlayerId SecondPlayerId { get; private set; }
-    
+
     public Field Field { get; private set; }
-    
+
     /// <summary>
     /// Последний ходивший игрок
     /// </summary>
     public PlayerId? LastMovePlayerId { get; private set; }
-    
+
     public DateTimeOffset StartedAt { get; private set; } = DateTimeOffset.UtcNow;
-    
+
     public DateTimeOffset? FinishedAt { get; private set; }
-    
+
     public GameResult Result { get; private set; } = GameResult.StillInProgress;
 
     public IReadOnlyList<GameMove> Moves => _moves.AsReadOnly();
-    
-    public PlayerId? WinnerPlayerId 
+
+    public PlayerId? WinnerPlayerId
     {
         get
         {
@@ -53,8 +53,8 @@ public sealed class Game : AggregateRoot<GameId>
             return null;
         }
     }
-    
-    public PlayerId? LoserPlayerId 
+
+    public PlayerId? LoserPlayerId
     {
         get
         {
@@ -72,7 +72,18 @@ public sealed class Game : AggregateRoot<GameId>
         }
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Не использовать, необходим для обхода ограничений EF Core
+    /// </summary>
+    private Game() : base(GameId.CreateNew())
+    {
+        FirstPlayerId = PlayerId.CreateNew();
+        SecondPlayerId = PlayerId.CreateNew();
+        StartedFromLobbyId = LobbyId.CreateNew();
+        Field = new Field(Id);
+    }
+
+/// <inheritdoc />
     public Game(PlayerId firstPlayerId, PlayerId secondPlayerId, LobbyId startedFromLobbyId) : base(GameId.CreateNew())
     {
         FirstPlayerId = firstPlayerId;

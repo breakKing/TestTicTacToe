@@ -15,14 +15,16 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, TRe
     where TRequest : notnull
 {
     private const string SubClaimName = "sub";
-    
+
     /// <summary>
     /// Конфигурация описания эндпоинта в сваггере
     /// </summary>
     /// <param name="summary">Основное описание эндпоинта</param>
+    /// <param name="bodyCanBeEmpty">Может ли тело запроса быть пустым</param>
     /// <param name="statusCodes">Возможные коды ответа от эндпоинта</param>
     protected virtual void ConfigureSwaggerDescription(
         EndpointSummaryBase summary, 
+        bool bodyCanBeEmpty = false,
         params HttpStatusCode[] statusCodes)
     {
         DontAutoTag();
@@ -31,9 +33,14 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, TRe
         {
             foreach (var code in statusCodes)
             {
+                if (bodyCanBeEmpty)
+                {
+                    desc.Accepts<TRequest>("*/*");
+                }
+                
                 desc.Produces<TResponse>((int)code);
             }
-        });
+        }, clearDefaults: bodyCanBeEmpty);
         
         Summary(summary);
     }

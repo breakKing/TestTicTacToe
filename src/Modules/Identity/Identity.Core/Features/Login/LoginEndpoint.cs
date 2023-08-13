@@ -37,6 +37,7 @@ public sealed class LoginEndpoint : EndpointBase<LoginRequest, Results<Ok<LoginR
 
         ConfigureSwaggerDescription(
             new LoginSummary(), 
+            false,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.InternalServerError);

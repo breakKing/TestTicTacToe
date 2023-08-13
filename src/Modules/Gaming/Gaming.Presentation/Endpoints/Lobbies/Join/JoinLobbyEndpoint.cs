@@ -26,6 +26,7 @@ public sealed class JoinLobbyEndpoint : EndpointBase<JoinLobbyRequest, Results<O
 
         ConfigureSwaggerDescription(
             new JoinLobbySummary(), 
+            true,
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
             HttpStatusCode.InternalServerError);

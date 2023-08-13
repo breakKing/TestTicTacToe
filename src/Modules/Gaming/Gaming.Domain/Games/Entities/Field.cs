@@ -18,6 +18,14 @@ public sealed class Field : Entity<FieldId>
     public GameId GameId { get; private set; }
     
     public IReadOnlyList<IReadOnlyList<FieldMark>> Cells => _cells.AsReadOnly();
+
+    /// <summary>
+    /// Не использовать, необходим для обхода ограничений EF Core
+    /// </summary>
+    private Field() : base(FieldId.CreateNew())
+    {
+        GameId = GameId.CreateNew();
+    }
     
     /// <inheritdoc />
     public Field(GameId gameId) : base(FieldId.CreateNew())
