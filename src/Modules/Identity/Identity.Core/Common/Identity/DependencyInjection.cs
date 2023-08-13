@@ -1,4 +1,5 @@
 ﻿using Identity.Core.Common.Identity.Entites;
+using Identity.Core.Common.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

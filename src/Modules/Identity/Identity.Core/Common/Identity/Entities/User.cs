@@ -2,7 +2,7 @@
 
 namespace Identity.Core.Common.Identity.Entites;
 
-internal sealed class User : IdentityUser<Guid>
+public sealed class User : IdentityUser<Guid>
 {
     
 }
