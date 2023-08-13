@@ -20,8 +20,6 @@
     <ItemGroup>
       <Folder Include="Endpoints\Games\GetCurrent\" />
       <Folder Include="Endpoints\Games\Move\" />
-      <Folder Include="Endpoints\Lobbies\Leave\" />
-      <Folder Include="Endpoints\Lobbies\Lock\" />
     </ItemGroup>
 
 </Project>

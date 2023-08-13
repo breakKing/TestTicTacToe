@@ -3,6 +3,7 @@ using System.Security.Claims;
 using ErrorOr;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Common.Api;
 

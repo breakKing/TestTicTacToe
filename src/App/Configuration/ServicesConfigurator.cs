@@ -24,7 +24,7 @@ internal static class ServicesConfigurator
         
         services.SwaggerDocument(o =>
         {
-            o.EnableJWTBearerAuth = false;
+            o.EnableJWTBearerAuth = true;
             
             o.DocumentSettings = settings =>
             {
