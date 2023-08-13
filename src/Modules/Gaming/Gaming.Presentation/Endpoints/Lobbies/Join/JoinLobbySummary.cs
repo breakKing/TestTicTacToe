@@ -12,6 +12,6 @@ public sealed class JoinLobbySummary : EndpointSummaryBase
         Description = "Присоединение текущего пользователя к заданному лобби";
         
         AddSuccessResponseExample(HttpStatusCode.OK, new EmptyResponse());
-        AddFailResponseExamples(HttpStatusCode.BadRequest, HttpStatusCode.NotFound, HttpStatusCode.InternalServerError);
+        AddFailResponseExamples(HttpStatusCode.BadRequest, HttpStatusCode.InternalServerError);
     }
 }

@@ -9,9 +9,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Gaming.Presentation.Endpoints.Lobbies.Join;
 
-public sealed class JoinLobbyEndpoint : EndpointBase<
-    JoinLobbyRequest, 
-    Results<Ok, NotFound<ProblemDetails>, ProblemDetails>>
+public sealed class JoinLobbyEndpoint : EndpointBase<JoinLobbyRequest, Results<Ok, ProblemDetails>>
 {
     private readonly ISender _sender;
 
@@ -30,12 +28,11 @@ public sealed class JoinLobbyEndpoint : EndpointBase<
             new JoinLobbySummary(), 
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
-            HttpStatusCode.NotFound,
             HttpStatusCode.InternalServerError);
     }
 
     /// <inheritdoc />
-    public override async Task<Results<Ok, NotFound<ProblemDetails>, ProblemDetails>> ExecuteAsync(
+    public override async Task<Results<Ok, ProblemDetails>> ExecuteAsync(
         JoinLobbyRequest req, 
         CancellationToken ct)
     {

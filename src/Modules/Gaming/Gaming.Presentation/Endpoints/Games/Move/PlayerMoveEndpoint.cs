@@ -1,19 +1,18 @@
 ﻿using System.Net;
 using Common.Api;
-using ErrorOr;
 using FastEndpoints;
-using Gaming.Application.Lobbies.Leave;
+using Gaming.Application.Games.Move;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace Gaming.Presentation.Endpoints.Lobbies.Leave;
+namespace Gaming.Presentation.Endpoints.Games.Move;
 
-public sealed class LeaveLobbyEndpoint : EndpointBase<LeaveLobbyRequest, Results<Ok, ProblemDetails>>
+public sealed class PlayerMoveEndpoint : EndpointBase<PlayerMoveRequest, Results<Ok, ProblemDetails>>
 {
     private readonly ISender _sender;
 
-    public LeaveLobbyEndpoint(ISender sender)
+    public PlayerMoveEndpoint(ISender sender)
     {
         _sender = sender;
     }
@@ -21,25 +20,22 @@ public sealed class LeaveLobbyEndpoint : EndpointBase<LeaveLobbyRequest, Results
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<LobbyGroup>();
-        Post("{@lobbyId}/leave", r => new { r.LobbyId });
+        Group<GameGroup>();
+        Post("{@gameId}/move", r => new { r.GameId });
         
         ConfigureSwaggerDescription(
-            new LeaveLobbySummary(), 
+            new PlayerMoveSummary(), 
             HttpStatusCode.OK,
             HttpStatusCode.BadRequest,
-            HttpStatusCode.NotFound,
             HttpStatusCode.InternalServerError);
     }
 
     /// <inheritdoc />
-    public override async Task<Results<Ok, ProblemDetails>> ExecuteAsync(
-        LeaveLobbyRequest req, 
-        CancellationToken ct)
+    public override async Task<Results<Ok, ProblemDetails>> ExecuteAsync(PlayerMoveRequest req, CancellationToken ct)
     {
         var userId = GetCurrentUserId()!;
 
-        var command = new LeaveLobbyCommand(userId.Value, req.LobbyId);
+        var command = new PlayerMoveCommand(userId.Value, req.GameId, req.X, req.Y);
 
         var result = await _sender.Send(command, ct);
 

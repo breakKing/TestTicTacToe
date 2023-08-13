@@ -9,9 +9,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Gaming.Presentation.Endpoints.Lobbies.Lock;
 
-public sealed class LockLobbyEndpoint : EndpointBase<
-    LockLobbyRequest, 
-    Results<Ok, NotFound<ProblemDetails>, ProblemDetails>>
+public sealed class LockLobbyEndpoint : EndpointBase<LockLobbyRequest, Results<Ok, ProblemDetails>>
 {
     private readonly ISender _sender;
 
@@ -35,7 +33,7 @@ public sealed class LockLobbyEndpoint : EndpointBase<
     }
 
     /// <inheritdoc />
-    public override async Task<Results<Ok, NotFound<ProblemDetails>, ProblemDetails>> ExecuteAsync(
+    public override async Task<Results<Ok, ProblemDetails>> ExecuteAsync(
         LockLobbyRequest req, 
         CancellationToken ct)
     {

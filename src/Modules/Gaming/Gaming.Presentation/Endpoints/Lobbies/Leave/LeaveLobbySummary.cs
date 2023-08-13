@@ -12,6 +12,6 @@ public sealed class LeaveLobbySummary : EndpointSummaryBase
         Description = "Выход текущего пользователя из заданного лобби";
         
         AddSuccessResponseExample(HttpStatusCode.OK, new EmptyResponse());
-        AddFailResponseExamples(HttpStatusCode.BadRequest, HttpStatusCode.NotFound, HttpStatusCode.InternalServerError);
+        AddFailResponseExamples(HttpStatusCode.BadRequest, HttpStatusCode.InternalServerError);
     }
 }
