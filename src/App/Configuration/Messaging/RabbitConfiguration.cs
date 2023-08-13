@@ -1,4 +1,4 @@
-﻿namespace Gaming.Infrastructure.Messaging;
+﻿namespace App.Configuration.Messaging;
 
 internal sealed class RabbitConfiguration
 {

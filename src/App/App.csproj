@@ -16,6 +16,7 @@
     <ItemGroup>
       <PackageReference Include="FastEndpoints" Version="5.15.0" />
       <PackageReference Include="FastEndpoints.Swagger" Version="5.15.0" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +27,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Modules\Gaming\Gaming.Presentation\Gaming.Presentation.csproj" />
     </ItemGroup>
+
+
 
 
 

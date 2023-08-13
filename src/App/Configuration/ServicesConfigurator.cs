@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using App.Configuration.Messaging;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Gaming.Presentation;
@@ -13,11 +14,11 @@ internal static class ServicesConfigurator
 {
     public static void Configure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddMainServices();
+        services.AddMainServices(configuration);
         services.AddGamingModule(configuration);
     }
 
-    private static IServiceCollection AddMainServices(this IServiceCollection services)
+    private static IServiceCollection AddMainServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddFastEndpoints();
         
@@ -48,6 +49,8 @@ internal static class ServicesConfigurator
 
             o.ShortSchemaNames = true;
         });
+
+        services.AddRabbit(configuration);
         
         return services;
     }

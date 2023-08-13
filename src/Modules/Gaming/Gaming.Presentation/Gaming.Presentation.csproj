@@ -12,8 +12,16 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Common.Api\Common.Api.csproj" />
+      <ProjectReference Include="..\..\Identity\Identity.IntegrationEvents\Identity.IntegrationEvents.csproj" />
       <ProjectReference Include="..\Gaming.Application\Gaming.Application.csproj" />
       <ProjectReference Include="..\Gaming.Infrastructure\Gaming.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Endpoints\Games\GetCurrent\" />
+      <Folder Include="Endpoints\Games\Move\" />
+      <Folder Include="Endpoints\Lobbies\Leave\" />
+      <Folder Include="Endpoints\Lobbies\Lock\" />
     </ItemGroup>
 
 </Project>

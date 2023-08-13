@@ -12,7 +12,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddPersistence(configuration);
-        services.AddRabbit(configuration);
+        services.AddMessaging(configuration);
         
         return services;
     }
