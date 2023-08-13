@@ -5,7 +5,7 @@ namespace Gaming.Application.Games;
 
 public interface IGameWriteRepository
 {
-    ValueTask<Game?> LoadAsync(GameId gameId, CancellationToken ct = default);
+    Task<Game?> LoadAsync(GameId gameId, CancellationToken ct = default);
 
     void Add(Game game);
 

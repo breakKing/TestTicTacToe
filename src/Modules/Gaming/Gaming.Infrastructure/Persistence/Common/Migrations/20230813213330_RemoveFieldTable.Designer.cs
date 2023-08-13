@@ -3,6 +3,7 @@ using System;
 using Gaming.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Gaming.Infrastructure.Persistence.Common.Migrations
 {
     [DbContext(typeof(GamingContext))]
-    partial class GamingContextModelSnapshot : ModelSnapshot
+    [Migration("20230813213330_RemoveFieldTable")]
+    partial class RemoveFieldTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,6 +62,11 @@ namespace Gaming.Infrastructure.Persistence.Common.Migrations
                         .HasColumnName("started_at")
                         .HasComment("Дата и время начала игры");
 
+                    b.Property<Guid>("StartedFromLobbyId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("started_from_lobby_id")
+                        .HasComment("Лобби, из которого игра была запущена");
+
                     b.Property<uint>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -76,6 +84,9 @@ namespace Gaming.Infrastructure.Persistence.Common.Migrations
 
                     b.HasIndex("SecondPlayerId")
                         .HasDatabaseName("ix_games_second_player_id");
+
+                    b.HasIndex("StartedFromLobbyId")
+                        .HasDatabaseName("ix_games_started_from_lobby_id");
 
                     b.ToTable("games", "Game");
                 });
@@ -127,11 +138,6 @@ namespace Gaming.Infrastructure.Persistence.Common.Migrations
                         .HasColumnName("id")
                         .HasComment("Идентификатор");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("game_id")
-                        .HasComment("Игра, начатая из данного лобби");
-
                     b.Property<Guid>("InitiatorPlayerId")
                         .HasColumnType("uuid")
                         .HasColumnName("initiator_player_id")
@@ -155,9 +161,6 @@ namespace Gaming.Infrastructure.Persistence.Common.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_lobbies");
-
-                    b.HasIndex("GameId")
-                        .HasDatabaseName("ix_lobbies_game_id");
 
                     b.HasIndex("InitiatorPlayerId")
                         .HasDatabaseName("ix_lobbies_initiator_player_id");
@@ -215,6 +218,13 @@ namespace Gaming.Infrastructure.Persistence.Common.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_games_players_second_player_id");
+
+                    b.HasOne("Gaming.Domain.Lobbies.Entities.Lobby", null)
+                        .WithMany()
+                        .HasForeignKey("StartedFromLobbyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("fk_games_lobbies_started_from_lobby_id");
                 });
 
             modelBuilder.Entity("Gaming.Domain.Games.Entities.GameMove", b =>
@@ -264,12 +274,6 @@ namespace Gaming.Infrastructure.Persistence.Common.Migrations
 
             modelBuilder.Entity("Gaming.Domain.Lobbies.Entities.Lobby", b =>
                 {
-                    b.HasOne("Gaming.Domain.Games.Entities.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .HasConstraintName("fk_lobbies_games_game_id");
-
                     b.HasOne("Gaming.Domain.Players.Entities.Player", null)
                         .WithMany()
                         .HasForeignKey("InitiatorPlayerId")

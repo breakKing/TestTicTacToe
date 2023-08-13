@@ -1,7 +1,9 @@
-﻿using Gaming.Domain.Lobbies.Entities;
+﻿using Gaming.Domain.Games.Entities;
+using Gaming.Domain.Lobbies.Entities;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.Entities;
 using Gaming.Infrastructure.Persistence.Common;
+using Gaming.Infrastructure.Persistence.Games.Converters;
 using Gaming.Infrastructure.Persistence.Lobbies.Converters;
 using Gaming.Infrastructure.Persistence.Players.Converters;
 using Microsoft.EntityFrameworkCore;
@@ -48,5 +50,17 @@ internal sealed class LobbyConfiguration : EntityTypeConfigurationBase<Lobby, Lo
         builder.Property(l => l.IsLocked)
             .IsRequired()
             .HasComment("Заблокировано ли лобби его лидером");
+        
+        builder.Property(l => l.GameId)
+            .HasConversion(new GameIdConverter())
+            .IsRequired(false)
+            .HasComment("Игра, начатая из данного лобби");
+
+        builder.HasOne<Game>()
+            .WithMany()
+            .HasForeignKey(l => l.GameId)
+            .HasConstraintName("fk_lobbies_games_game_id")
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

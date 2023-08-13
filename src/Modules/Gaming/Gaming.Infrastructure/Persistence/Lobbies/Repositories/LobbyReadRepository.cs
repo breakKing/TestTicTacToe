@@ -1,7 +1,9 @@
 ﻿using Gaming.Application.Common.Primitives.Pagination;
 using Gaming.Application.Lobbies;
 using Gaming.Application.Players;
+using Gaming.Domain.Games.ValueObjects;
 using Gaming.Domain.Lobbies.Entities;
+using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.Entities;
 using Gaming.Domain.Players.ValueObjects;
 using Gaming.Infrastructure.Persistence.Common;
@@ -61,6 +63,15 @@ internal sealed class LobbyReadRepository : ILobbyReadRepository
         var data = await finalQuery.ToListAsync(ct);
 
         return new PagedList<LobbyDto>(data, count, paginationRequest.PageNumber, paginationRequest.PageSize);
+    }
+
+    /// <inheritdoc />
+    public async ValueTask<LobbyId?> GetLobbyIdByGameIdAsync(GameId gameId, CancellationToken ct = default)
+    {
+        return await _context.Set<Lobby>()
+            .Where(l => l.GameId == gameId)
+            .Select(l => l.Id)
+            .FirstOrDefaultAsync(ct);
     }
 
     private IQueryable<LobbyDto> SelectDto(IQueryable<Lobby> query)

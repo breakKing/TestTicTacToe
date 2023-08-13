@@ -15,7 +15,7 @@ internal sealed class GameWriteRepository : IGameWriteRepository
     }
 
     /// <inheritdoc />
-    public async ValueTask<Game?> LoadAsync(GameId gameId, CancellationToken ct = default)
+    public async Task<Game?> LoadAsync(GameId gameId, CancellationToken ct = default)
     {
         return await _context.Set<Game>()
             .SingleOrDefaultAsync(g => g.Id == gameId, ct);

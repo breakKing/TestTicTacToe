@@ -15,13 +15,35 @@ public sealed class Game : AggregateRoot<GameId>
 
     private readonly List<GameMove> _moves = new();
 
-    public LobbyId StartedFromLobbyId { get; private set; }
-
     public PlayerId FirstPlayerId { get; private set; }
 
     public PlayerId SecondPlayerId { get; private set; }
 
-    public Field Field { get; private set; }
+    public Field Field
+    {
+        get
+        {
+            var field = new Field(Id);
+
+            var firstPlayerMove = true;
+            
+            foreach (var move in _moves.OrderBy(m => m.MovedAt))
+            {
+                if (firstPlayerMove)
+                {
+                    field.FirstPlayerMove(move.Coordinates);
+                }
+                else
+                {
+                    field.SecondPlayerMove(move.Coordinates);
+                }
+
+                firstPlayerMove = !firstPlayerMove;
+            }
+
+            return field;
+        }
+    }
 
     /// <summary>
     /// Последний ходивший игрок
@@ -79,8 +101,6 @@ public sealed class Game : AggregateRoot<GameId>
     {
         FirstPlayerId = PlayerId.CreateNew();
         SecondPlayerId = PlayerId.CreateNew();
-        StartedFromLobbyId = LobbyId.CreateNew();
-        Field = new Field(Id);
     }
 
 /// <inheritdoc />
@@ -88,8 +108,6 @@ public sealed class Game : AggregateRoot<GameId>
     {
         FirstPlayerId = firstPlayerId;
         SecondPlayerId = secondPlayerId;
-        StartedFromLobbyId = startedFromLobbyId;
-        Field = new Field(Id);
         
         RaiseEvent(new GameStartedDomainEvent(Id, FirstPlayerId, SecondPlayerId, StartedAt));
     }

@@ -8,16 +8,16 @@ namespace Gaming.Application.Games.End;
 
 internal sealed class GameEndedReleasePlayersHandler : IDomainEventHandler<GameEndedDomainEvent>
 {
-    private readonly IGameWriteRepository _gameWriteRepository;
+    private readonly ILobbyReadRepository _lobbyReadRepository;
     private readonly ILobbyWriteRepository _lobbyWriteRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public GameEndedReleasePlayersHandler(
-        IGameWriteRepository gameWriteRepository,
+        ILobbyReadRepository lobbyReadRepository,
         ILobbyWriteRepository lobbyWriteRepository, 
         IUnitOfWork unitOfWork)
     {
-        _gameWriteRepository = gameWriteRepository;
+        _lobbyReadRepository = lobbyReadRepository;
         _lobbyWriteRepository = lobbyWriteRepository;
         _unitOfWork = unitOfWork;
     }
@@ -26,15 +26,15 @@ internal sealed class GameEndedReleasePlayersHandler : IDomainEventHandler<GameE
     public async Task Handle(GameEndedDomainEvent domainEvent, CancellationToken cancellationToken)
     {
         using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        
-        var game = await _gameWriteRepository.LoadAsync(domainEvent.GameId, cancellationToken);
 
-        if (game is null)
+        var lobbyId = await _lobbyReadRepository.GetLobbyIdByGameIdAsync(domainEvent.GameId, cancellationToken);
+
+        if (lobbyId is null)
         {
             return;
         }
-
-        var lobby = await _lobbyWriteRepository.LoadAsync(game.StartedFromLobbyId, cancellationToken);
+        
+        var lobby = await _lobbyWriteRepository.LoadAsync(lobbyId, cancellationToken);
 
         if (lobby is null)
         {

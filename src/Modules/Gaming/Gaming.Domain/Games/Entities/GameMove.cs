@@ -35,6 +35,9 @@ public sealed class GameMove : Entity<GameMoveId>
     {
         Coordinates = coordinates;
         
-        RaiseEvent(new GamePlayerMovedDomainEvent(GameId, PlayerId, Id, Coordinates, MovedAt));
+        RaiseEvent(new GamePlayerMovedDomainEvent(
+            GameId, 
+            PlayerId, 
+            Id, Coordinates, MovedAt));
     }
 }

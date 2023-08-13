@@ -23,17 +23,6 @@ internal sealed class GameConfiguration : EntityTypeConfigurationBase<Game, Game
             .HasComment("Идентификатор");
         
         builder.HasKey(g => g.Id);
-
-        builder.Property(g => g.StartedFromLobbyId)
-            .HasConversion(new LobbyIdConverter())
-            .HasComment("Лобби, из которого игра была запущена");
-
-        builder.HasOne<Lobby>()
-            .WithMany()
-            .HasForeignKey(g => g.StartedFromLobbyId)
-            .HasConstraintName("fk_games_lobbies_started_from_lobby_id")
-            .IsRequired()
-            .OnDelete(DeleteBehavior.NoAction);
         
         builder.Property(g => g.FirstPlayerId)
             .HasConversion(new PlayerIdConverter())
@@ -61,8 +50,7 @@ internal sealed class GameConfiguration : EntityTypeConfigurationBase<Game, Game
             .HasConversion(new PlayerIdConverter())
             .HasComment("Игрок, сделавший последний ход");
 
-        builder.Navigation(g => g.Field)
-            .AutoInclude();
+        builder.Ignore(g => g.Field);
 
         builder.HasOne<Player>()
             .WithMany()

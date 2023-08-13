@@ -9,26 +9,31 @@ namespace Gaming.Application.Lobbies.Lock;
 
 internal sealed class CreateGameAfterLobbyLockedHandler : IDomainEventHandler<LobbyLockedForGameStartDomainEvent>
 {
-    private readonly IGameWriteRepository _writeRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IGameWriteRepository _gameRepository;
+    private readonly ILobbyWriteRepository _lobbyRepository;
 
-    public CreateGameAfterLobbyLockedHandler(IGameWriteRepository writeRepository, IUnitOfWork unitOfWork)
+    public CreateGameAfterLobbyLockedHandler(
+        IGameWriteRepository gameRepository, 
+        ILobbyWriteRepository lobbyRepository) 
     {
-        _writeRepository = writeRepository;
-        _unitOfWork = unitOfWork;
+        _gameRepository = gameRepository;
+        _lobbyRepository = lobbyRepository;
     }
 
     /// <inheritdoc />
     public async Task Handle(LobbyLockedForGameStartDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        var lobby = await _lobbyRepository.LoadAsync(domainEvent.LobbyId, cancellationToken);
+
+        if (lobby is null)
+        {
+            return;
+        }
         
         var game = new Game(domainEvent.FirstPlayerId, domainEvent.SecondPlayerId, domainEvent.LobbyId);
-
-        _writeRepository.Add(game);
+        _gameRepository.Add(game);
         
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        transactionScope.Complete();
+        lobby.SetGame(game);
+        _lobbyRepository.Update(lobby);
     }
 }

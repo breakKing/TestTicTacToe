@@ -1,5 +1,7 @@
 ﻿using ErrorOr;
 using Gaming.Domain.Common;
+using Gaming.Domain.Games.Entities;
+using Gaming.Domain.Games.ValueObjects;
 using Gaming.Domain.Lobbies.DomainEvents;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
@@ -37,6 +39,8 @@ public sealed class Lobby : AggregateRoot<LobbyId>
     /// Показатель, что лобби заблокировано и игра начинается
     /// </summary>
     public bool IsLocked { get; private set; }
+    
+    public GameId? GameId { get; private set; }
 
     /// <summary>
     /// Не использовать, необходим для обхода ограничений EF Core
@@ -154,5 +158,10 @@ public sealed class Lobby : AggregateRoot<LobbyId>
         RaiseEvent(new LobbyDisbandedDomainEvent(Id));
 
         return true;
+    }
+
+    public void SetGame(Game game)
+    {
+        GameId = game.Id;
     }
 }

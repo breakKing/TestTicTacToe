@@ -1,4 +1,5 @@
 ﻿using Gaming.Application.Common.Primitives.Pagination;
+using Gaming.Domain.Games.ValueObjects;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
 
@@ -14,4 +15,6 @@ public interface ILobbyReadRepository
         PlayerId playerId, 
         PaginationRequest paginationRequest,
         CancellationToken ct = default);
+
+    ValueTask<LobbyId?> GetLobbyIdByGameIdAsync(GameId gameId, CancellationToken ct = default);
 }
