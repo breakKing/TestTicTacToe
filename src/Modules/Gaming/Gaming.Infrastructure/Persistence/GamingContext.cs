@@ -6,7 +6,7 @@ namespace Gaming.Infrastructure.Persistence;
 internal sealed class GamingContext : DbContext, IUnitOfWork
 {
     /// <inheritdoc />
-    public GamingContext(DbContextOptions options) : base(options)
+    public GamingContext(DbContextOptions<GamingContext> options) : base(options)
     {
     }
 

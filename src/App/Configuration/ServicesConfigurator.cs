@@ -4,6 +4,7 @@ using App.Configuration.Messaging;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Gaming.Presentation;
+using Identity.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NJsonSchema;
@@ -15,6 +16,7 @@ internal static class ServicesConfigurator
     public static void Configure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMainServices(configuration);
+        services.AddIdentityModule(configuration);
         services.AddGamingModule(configuration);
     }
 

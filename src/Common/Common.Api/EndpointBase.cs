@@ -14,6 +14,8 @@ namespace Common.Api;
 public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, TResponse>
     where TRequest : notnull
 {
+    private const string SubClaimName = "sub";
+    
     /// <summary>
     /// Конфигурация описания эндпоинта в сваггере
     /// </summary>
@@ -38,7 +40,7 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, TRe
 
     protected Guid? GetCurrentUserId()
     {
-        var sub = User.FindFirstValue("sub");
+        var sub = User.FindFirstValue(SubClaimName);
 
         if (Guid.TryParse(sub, out var userId))
         {

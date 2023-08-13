@@ -26,6 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Modules\Gaming\Gaming.Presentation\Gaming.Presentation.csproj" />
+      <ProjectReference Include="..\Modules\Identity\Identity.Core\Identity.Core.csproj" />
     </ItemGroup>
 
 

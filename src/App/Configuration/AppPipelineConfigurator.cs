@@ -8,6 +8,7 @@ internal static class AppPipelineConfigurator
 {
     public static void Configure(this WebApplication app)
     {
+        app.UseAuthentication();
         app.UseAuthorization();
         
         app.UseFastEndpoints(config =>
