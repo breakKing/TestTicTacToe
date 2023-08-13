@@ -8,19 +8,15 @@ namespace Gaming.Application.Lobbies.Disband;
 internal sealed class LobbyDeleteOnDisbandHandler : IDomainEventHandler<LobbyDisbandedDomainEvent>
 {
     private readonly ILobbyWriteRepository _writeRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public LobbyDeleteOnDisbandHandler(ILobbyWriteRepository writeRepository, IUnitOfWork unitOfWork)
+    public LobbyDeleteOnDisbandHandler(ILobbyWriteRepository writeRepository)
     {
         _writeRepository = writeRepository;
-        _unitOfWork = unitOfWork;
     }
 
     /// <inheritdoc />
     public async Task Handle(LobbyDisbandedDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        
         var lobby = await _writeRepository.LoadAsync(domainEvent.LobbyId, cancellationToken);
 
         if (lobby is null)
@@ -29,9 +25,5 @@ internal sealed class LobbyDeleteOnDisbandHandler : IDomainEventHandler<LobbyDis
         }
         
         _writeRepository.Delete(lobby);
-
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        transactionScope.Complete();
     }
 }

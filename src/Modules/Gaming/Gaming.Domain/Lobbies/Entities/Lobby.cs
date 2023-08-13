@@ -129,11 +129,6 @@ public sealed class Lobby : AggregateRoot<LobbyId>
         }
 
         IsLocked = true;
-        
-        RaiseEvent(new LobbyLockedForGameStartDomainEvent(
-            Id,
-            InitiatorPlayerId,
-            JoinedPlayerId));
 
         return true;
     }

@@ -10,23 +10,18 @@ internal sealed class GameEndedReleasePlayersHandler : IDomainEventHandler<GameE
 {
     private readonly ILobbyReadRepository _lobbyReadRepository;
     private readonly ILobbyWriteRepository _lobbyWriteRepository;
-    private readonly IUnitOfWork _unitOfWork;
 
     public GameEndedReleasePlayersHandler(
         ILobbyReadRepository lobbyReadRepository,
-        ILobbyWriteRepository lobbyWriteRepository, 
-        IUnitOfWork unitOfWork)
+        ILobbyWriteRepository lobbyWriteRepository)
     {
         _lobbyReadRepository = lobbyReadRepository;
         _lobbyWriteRepository = lobbyWriteRepository;
-        _unitOfWork = unitOfWork;
     }
 
     /// <inheritdoc />
     public async Task Handle(GameEndedDomainEvent domainEvent, CancellationToken cancellationToken)
     {
-        using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
         var lobbyId = await _lobbyReadRepository.GetLobbyIdByGameIdAsync(domainEvent.GameId, cancellationToken);
 
         if (lobbyId is null)
@@ -42,9 +37,5 @@ internal sealed class GameEndedReleasePlayersHandler : IDomainEventHandler<GameE
         }
 
         _lobbyWriteRepository.Delete(lobby);
-        
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        transactionScope.Complete();
     }
 }

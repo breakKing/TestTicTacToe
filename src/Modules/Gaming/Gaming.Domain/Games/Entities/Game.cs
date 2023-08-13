@@ -104,7 +104,7 @@ public sealed class Game : AggregateRoot<GameId>
     }
 
 /// <inheritdoc />
-    public Game(PlayerId firstPlayerId, PlayerId secondPlayerId, LobbyId startedFromLobbyId) : base(GameId.CreateNew())
+    public Game(PlayerId firstPlayerId, PlayerId secondPlayerId) : base(GameId.CreateNew())
     {
         FirstPlayerId = firstPlayerId;
         SecondPlayerId = secondPlayerId;

@@ -1,5 +1,7 @@
 ﻿using ErrorOr;
 using Gaming.Application.Common.Handling;
+using Gaming.Application.Games;
+using Gaming.Domain.Games.Entities;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
 
@@ -9,11 +11,13 @@ internal sealed class LobbyLockCommandHandler : ICommandHandler<LobbyLockCommand
 {
     private const string LobbyNotFoundErrorDescription = "Данное лобби не существует";
     
-    private readonly ILobbyWriteRepository _writeRepository;
+    private readonly ILobbyWriteRepository _lobbyWriteRepository;
+    private readonly IGameWriteRepository _gameWriteRepository;
 
-    public LobbyLockCommandHandler(ILobbyWriteRepository writeRepository)
+    public LobbyLockCommandHandler(ILobbyWriteRepository lobbyWriteRepository, IGameWriteRepository gameWriteRepository)
     {
-        _writeRepository = writeRepository;
+        _lobbyWriteRepository = lobbyWriteRepository;
+        _gameWriteRepository = gameWriteRepository;
     }
 
     /// <inheritdoc />
@@ -21,7 +25,7 @@ internal sealed class LobbyLockCommandHandler : ICommandHandler<LobbyLockCommand
     {
         var lobbyId = LobbyId.CreateFromGuid(request.LobbyId);
 
-        var lobby = await _writeRepository.LoadAsync(lobbyId, cancellationToken);
+        var lobby = await _lobbyWriteRepository.LoadAsync(lobbyId, cancellationToken);
         
         if (lobby is null)
         {
@@ -37,7 +41,11 @@ internal sealed class LobbyLockCommandHandler : ICommandHandler<LobbyLockCommand
             return startResult.Errors;
         }
         
-        _writeRepository.Update(lobby);
+        var game = new Game(lobby.InitiatorPlayerId, lobby.JoinedPlayerId!);
+        _gameWriteRepository.Add(game);
+        
+        lobby.SetGame(game);
+        _lobbyWriteRepository.Update(lobby);
 
         return true;
     }

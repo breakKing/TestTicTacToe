@@ -32,10 +32,14 @@ internal sealed class DomainEventPublisherInterceptor : SaveChangesInterceptor
         
         var finalResult = await base.SavingChangesAsync(eventData, result, cancellationToken);
 
+        var tasks = new List<Task>();
+
         foreach (var domainEvent in domainEvents)
         {
-            await _publisher.Publish(domainEvent, cancellationToken);
+            tasks.Add(_publisher.Publish(domainEvent, cancellationToken));
         }
+
+        await Task.WhenAll(tasks);
         
         return finalResult;
     }
