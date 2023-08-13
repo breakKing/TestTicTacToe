@@ -21,9 +21,9 @@ public sealed class JoinLobbyEndpoint : EndpointBase<JoinLobbyRequest, Results<O
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<LobbyGroup>();
         Post("{@lobbyId}/join", r => new { r.LobbyId });
-        
+        Group<LobbyGroup>();
+
         ConfigureSwaggerDescription(
             new JoinLobbySummary(), 
             HttpStatusCode.OK,

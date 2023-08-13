@@ -24,9 +24,9 @@ public sealed class GetCurrentLobbyEndpoint : EndpointBase<
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<LobbyGroup>();
         Get("current");
-        
+        Group<LobbyGroup>();
+
         ConfigureSwaggerDescription(
             new GetCurrentLobbySummary(), 
             HttpStatusCode.OK,

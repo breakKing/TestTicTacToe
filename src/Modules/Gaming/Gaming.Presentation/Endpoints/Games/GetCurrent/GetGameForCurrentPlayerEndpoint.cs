@@ -24,9 +24,9 @@ public sealed class GetGameForCurrentPlayerEndpoint : EndpointBase<
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<GameGroup>();
         Get("{@gameId}", r => new { r.GameId });
-        
+        Group<GameGroup>();
+
         ConfigureSwaggerDescription(
             new GetGameForCurrentPlayerSummary(), 
             HttpStatusCode.OK,

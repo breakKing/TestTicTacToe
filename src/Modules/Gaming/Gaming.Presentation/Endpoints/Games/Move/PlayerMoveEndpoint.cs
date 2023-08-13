@@ -20,9 +20,9 @@ public sealed class PlayerMoveEndpoint : EndpointBase<PlayerMoveRequest, Results
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<GameGroup>();
         Post("{@gameId}/move", r => new { r.GameId });
-        
+        Group<GameGroup>();
+
         ConfigureSwaggerDescription(
             new PlayerMoveSummary(), 
             HttpStatusCode.OK,

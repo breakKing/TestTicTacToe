@@ -21,9 +21,9 @@ public sealed class LockLobbyEndpoint : EndpointBase<LockLobbyRequest, Results<O
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<LobbyGroup>();
         Post("{@lobbyId}/lock", r => new { r.LobbyId });
-        
+        Group<LobbyGroup>();
+
         ConfigureSwaggerDescription(
             new LockLobbySummary(), 
             HttpStatusCode.OK,

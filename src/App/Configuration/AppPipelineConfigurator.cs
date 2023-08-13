@@ -1,4 +1,5 @@
-﻿using FastEndpoints;
+﻿using System.Text.Json;
+using FastEndpoints;
 using FastEndpoints.Swagger;
 
 namespace App.Configuration;
@@ -8,7 +9,13 @@ internal static class AppPipelineConfigurator
     public static void Configure(this WebApplication app)
     {
         app.UseAuthorization();
-        app.UseFastEndpoints();
+        
+        app.UseFastEndpoints(config =>
+        {
+            config.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            config.Endpoints.RoutePrefix = "api";
+        });
+        
         app.UseSwaggerGen();
     }
 }

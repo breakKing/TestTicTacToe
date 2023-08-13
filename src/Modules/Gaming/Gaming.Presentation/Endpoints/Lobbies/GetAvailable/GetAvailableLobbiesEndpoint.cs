@@ -21,9 +21,9 @@ public sealed class GetAvailableLobbiesEndpoint : EndpointBase<GetAvailableLobbi
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<LobbyGroup>();
         Get("available");
-        
+        Group<LobbyGroup>();
+
         ConfigureSwaggerDescription(
             new GetAvailableLobbiesSummary(), 
             HttpStatusCode.OK,

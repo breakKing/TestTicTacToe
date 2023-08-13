@@ -21,9 +21,9 @@ public sealed class LeaveLobbyEndpoint : EndpointBase<LeaveLobbyRequest, Results
     /// <inheritdoc />
     public override void Configure()
     {
-        Group<LobbyGroup>();
         Post("{@lobbyId}/leave", r => new { r.LobbyId });
-        
+        Group<LobbyGroup>();
+
         ConfigureSwaggerDescription(
             new LeaveLobbySummary(), 
             HttpStatusCode.OK,
