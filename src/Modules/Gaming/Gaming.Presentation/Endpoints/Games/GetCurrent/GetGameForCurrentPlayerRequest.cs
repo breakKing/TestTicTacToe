@@ -1,3 +1,3 @@
 ﻿namespace Gaming.Presentation.Endpoints.Games.GetCurrent;
 
-public sealed record GetGameForCurrentPlayerRequest;
+public sealed record GetGameForCurrentPlayerRequest(Guid GameId);

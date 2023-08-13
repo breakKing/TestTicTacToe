@@ -37,8 +37,8 @@ public sealed class GetGameForCurrentPlayerSummary : EndpointSummaryBase
     
     public GetGameForCurrentPlayerSummary()
     {
-        Summary = "Получение текущей игры данного игрока";
-        Description = "Получение текущей игры, в которую в настоящий момент играет текущий пользователь";
+        Summary = "Получение игры";
+        Description = "Получение игры по идентификатору. Ответ будет пустым, если игрок не участвует в игре";
         
         AddSuccessResponseExample(HttpStatusCode.OK, SuccessResponseExample);
         AddFailResponseExamples(HttpStatusCode.BadRequest, HttpStatusCode.NotFound, HttpStatusCode.InternalServerError);

@@ -1,12 +1,18 @@
 ﻿using System.Net;
 using Common.Api;
+using ErrorOr;
 using FastEndpoints;
 using Gaming.Application.Games;
+using Gaming.Application.Games.GetForPlayer;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Gaming.Presentation.Endpoints.Games.GetCurrent;
 
-public sealed class GetGameForCurrentPlayerEndpoint : EndpointBase<EmptyRequest, GameDto>
+public sealed class GetGameForCurrentPlayerEndpoint : EndpointBase<
+    GetGameForCurrentPlayerRequest, 
+    Results<Ok<GameDto>, NotFound<ProblemDetails>, ProblemDetails>>
 {
     private readonly ISender _sender;
 
@@ -19,7 +25,7 @@ public sealed class GetGameForCurrentPlayerEndpoint : EndpointBase<EmptyRequest,
     public override void Configure()
     {
         Group<GameGroup>();
-        Get("current");
+        Get("{@gameId}", r => new { r.GameId });
         
         ConfigureSwaggerDescription(
             new GetGameForCurrentPlayerSummary(), 
@@ -27,5 +33,31 @@ public sealed class GetGameForCurrentPlayerEndpoint : EndpointBase<EmptyRequest,
             HttpStatusCode.BadRequest,
             HttpStatusCode.NotFound,
             HttpStatusCode.InternalServerError);
+    }
+
+    /// <inheritdoc />
+    public override async Task<Results<Ok<GameDto>, NotFound<ProblemDetails>, ProblemDetails>> ExecuteAsync(
+        GetGameForCurrentPlayerRequest req, 
+        CancellationToken ct)
+    {
+        var userId = GetCurrentUserId()!;
+
+        var command = new GetGameForPlayerQuery(req.GameId, userId.Value);
+
+        var result = await _sender.Send(command, ct);
+
+        if (result.IsError)
+        {
+            AddErrors(result.Errors);
+
+            if (result.Errors.Any(e => e.Type == ErrorType.NotFound))
+            {
+                return TypedResults.NotFound(new ProblemDetails(ValidationFailures));
+            }
+
+            return new ProblemDetails(ValidationFailures);
+        }
+
+        return TypedResults.Ok(result.Value);
     }
 }
