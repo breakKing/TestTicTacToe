@@ -3,7 +3,7 @@ using Gaming.Application.Common.Messaging;
 using Gaming.Domain.Games.DomainEvents;
 using Gaming.IntegrationEvents.Games;
 
-namespace Gaming.Application.Games.Create;
+namespace Gaming.Application.Games.Start;
 
 internal sealed class GameStartedIntegrationEventSender : IDomainEventHandler<GameStartedDomainEvent>
 {

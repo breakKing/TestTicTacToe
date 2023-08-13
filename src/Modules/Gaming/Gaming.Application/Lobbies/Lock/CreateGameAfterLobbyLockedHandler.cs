@@ -1,10 +1,11 @@
 ﻿using System.Transactions;
 using Gaming.Application.Common.Handling;
 using Gaming.Application.Common.Persistence;
+using Gaming.Application.Games;
 using Gaming.Domain.Games.Entities;
 using Gaming.Domain.Lobbies.DomainEvents;
 
-namespace Gaming.Application.Games.Start;
+namespace Gaming.Application.Lobbies.Lock;
 
 internal sealed class CreateGameAfterLobbyLockedHandler : IDomainEventHandler<LobbyLockedForGameStartDomainEvent>
 {

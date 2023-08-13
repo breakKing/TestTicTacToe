@@ -3,7 +3,7 @@ using Gaming.Application.Common.Messaging;
 using Gaming.Domain.Lobbies.DomainEvents;
 using Gaming.IntegrationEvents.Lobbies;
 
-namespace Gaming.Application.Lobbies.StartGame;
+namespace Gaming.Application.Lobbies.Lock;
 
 internal sealed class LobbyLockedForGameStartIntegrationEventSender : IDomainEventHandler<LobbyLockedForGameStartDomainEvent>
 {

@@ -3,21 +3,21 @@ using Gaming.Application.Common.Handling;
 using Gaming.Domain.Lobbies.ValueObjects;
 using Gaming.Domain.Players.ValueObjects;
 
-namespace Gaming.Application.Lobbies.StartGame;
+namespace Gaming.Application.Lobbies.Lock;
 
-internal sealed class StartGameFromLobbyCommandHandler : ICommandHandler<StartGameFromLobbyCommand>
+internal sealed class LobbyLockCommandHandler : ICommandHandler<LobbyLockCommand>
 {
     private const string LobbyNotFoundErrorDescription = "Данное лобби не существует";
     
     private readonly ILobbyWriteRepository _writeRepository;
 
-    public StartGameFromLobbyCommandHandler(ILobbyWriteRepository writeRepository)
+    public LobbyLockCommandHandler(ILobbyWriteRepository writeRepository)
     {
         _writeRepository = writeRepository;
     }
 
     /// <inheritdoc />
-    public async Task<ErrorOr<bool>> Handle(StartGameFromLobbyCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<bool>> Handle(LobbyLockCommand request, CancellationToken cancellationToken)
     {
         var lobbyId = LobbyId.CreateFromGuid(request.LobbyId);
 
