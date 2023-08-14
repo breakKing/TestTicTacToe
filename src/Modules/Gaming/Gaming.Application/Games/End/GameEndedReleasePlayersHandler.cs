@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Gaming.Application.Common.Handling;
+﻿using Gaming.Application.Common.Handling;
 using Gaming.Application.Common.Persistence;
 using Gaming.Application.Lobbies;
 using Gaming.Domain.Games.DomainEvents;
@@ -10,13 +9,16 @@ internal sealed class GameEndedReleasePlayersHandler : IDomainEventHandler<GameE
 {
     private readonly ILobbyReadRepository _lobbyReadRepository;
     private readonly ILobbyWriteRepository _lobbyWriteRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GameEndedReleasePlayersHandler(
         ILobbyReadRepository lobbyReadRepository,
-        ILobbyWriteRepository lobbyWriteRepository)
+        ILobbyWriteRepository lobbyWriteRepository, 
+        IUnitOfWork unitOfWork)
     {
         _lobbyReadRepository = lobbyReadRepository;
         _lobbyWriteRepository = lobbyWriteRepository;
+        _unitOfWork = unitOfWork;
     }
 
     /// <inheritdoc />
@@ -37,5 +39,7 @@ internal sealed class GameEndedReleasePlayersHandler : IDomainEventHandler<GameE
         }
 
         _lobbyWriteRepository.Delete(lobby);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

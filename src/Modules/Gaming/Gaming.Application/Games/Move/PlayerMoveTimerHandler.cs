@@ -26,9 +26,7 @@ internal sealed class PlayerMoveTimerHandler :
             domainEvent.FirstPlayerId,
             null);
         
-        _sender.Send(command, cancellationToken);
-        
-        return Task.CompletedTask;
+        return _sender.Send(command, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -48,8 +46,6 @@ internal sealed class PlayerMoveTimerHandler :
             game.LastMovePlayerId == game.FirstPlayerId ? game.SecondPlayerId : game.FirstPlayerId,
             domainEvent.MoveId);
         
-        _sender.Send(command, cancellationToken);
-        
-        return Task.CompletedTask;
+        return _sender.Send(command, cancellationToken);
     }
 }

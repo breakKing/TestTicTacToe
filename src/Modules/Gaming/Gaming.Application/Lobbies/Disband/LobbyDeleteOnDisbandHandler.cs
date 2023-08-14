@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Gaming.Application.Common.Handling;
+﻿using Gaming.Application.Common.Handling;
 using Gaming.Application.Common.Persistence;
 using Gaming.Domain.Lobbies.DomainEvents;
 
@@ -8,10 +7,12 @@ namespace Gaming.Application.Lobbies.Disband;
 internal sealed class LobbyDeleteOnDisbandHandler : IDomainEventHandler<LobbyDisbandedDomainEvent>
 {
     private readonly ILobbyWriteRepository _writeRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public LobbyDeleteOnDisbandHandler(ILobbyWriteRepository writeRepository)
+    public LobbyDeleteOnDisbandHandler(ILobbyWriteRepository writeRepository, IUnitOfWork unitOfWork)
     {
         _writeRepository = writeRepository;
+        _unitOfWork = unitOfWork;
     }
 
     /// <inheritdoc />
@@ -25,5 +26,7 @@ internal sealed class LobbyDeleteOnDisbandHandler : IDomainEventHandler<LobbyDis
         }
         
         _writeRepository.Delete(lobby);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
